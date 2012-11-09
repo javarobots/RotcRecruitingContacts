@@ -4,6 +4,8 @@
  */
 package ui;
 
+import javax.swing.JFileChooser;
+
 /**
  *
  * @author javarobots74
@@ -29,8 +31,9 @@ public class RotcContacts extends javax.swing.JFrame {
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         statusMenu = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        workingDirectoryMenuItem = new javax.swing.JMenuItem();
+        synchronizeCheckBox = new javax.swing.JMenuItem();
+        sycnhronizeCheckBox = new javax.swing.JCheckBoxMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Det 014 Contacts");
@@ -41,13 +44,21 @@ public class RotcContacts extends javax.swing.JFrame {
         statusMenu.setText("Status");
         statusMenu.setToolTipText("");
 
-        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/error_round_13x13.png"))); // NOI18N
-        jMenuItem1.setText("Working Directory");
-        statusMenu.add(jMenuItem1);
+        workingDirectoryMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/error_round_13x13.png"))); // NOI18N
+        workingDirectoryMenuItem.setText("Working Directory");
+        workingDirectoryMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                workingDirectoryMenuItemActionPerformed(evt);
+            }
+        });
+        statusMenu.add(workingDirectoryMenuItem);
 
-        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/error_round_13x13.png"))); // NOI18N
-        jMenuItem2.setText("Synchronization Directory");
-        statusMenu.add(jMenuItem2);
+        synchronizeCheckBox.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/error_round_13x13.png"))); // NOI18N
+        synchronizeCheckBox.setText("Synchronization Directory");
+        statusMenu.add(synchronizeCheckBox);
+
+        sycnhronizeCheckBox.setText("Synchronize Data Source");
+        statusMenu.add(sycnhronizeCheckBox);
 
         menuBar.add(statusMenu);
 
@@ -66,6 +77,12 @@ public class RotcContacts extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void workingDirectoryMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_workingDirectoryMenuItemActionPerformed
+        JFileChooser chooser = new JFileChooser();
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        chooser.showDialog(this, "Select");
+    }//GEN-LAST:event_workingDirectoryMenuItemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -103,9 +120,10 @@ public class RotcContacts extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu fileMenu;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu statusMenu;
+    private javax.swing.JCheckBoxMenuItem sycnhronizeCheckBox;
+    private javax.swing.JMenuItem synchronizeCheckBox;
+    private javax.swing.JMenuItem workingDirectoryMenuItem;
     // End of variables declaration//GEN-END:variables
 }
