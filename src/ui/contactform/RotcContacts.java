@@ -2,8 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ui;
+package ui.contactform;
 
+import java.util.Observable;
+import java.util.Observer;
 import javax.swing.JFileChooser;
 import ui.utility.ComponentPosition;
 
@@ -11,7 +13,9 @@ import ui.utility.ComponentPosition;
  *
  * @author javarobots74
  */
-public class RotcContacts extends javax.swing.JFrame {
+public class RotcContacts extends javax.swing.JFrame implements Observer {
+
+    private static RotcContactsController contactController;
 
     /**
      * Creates new form RotcContacts
@@ -125,6 +129,10 @@ public class RotcContacts extends javax.swing.JFrame {
             @Override
             public void run() {
                 RotcContacts instance = new RotcContacts();
+
+                contactController = new RotcContactsController(new RotcContactsModel());
+                contactController.checkConfiguration();
+
                 ComponentPosition.centerFrame(instance);
                 instance.setVisible(true);
             }
@@ -139,4 +147,9 @@ public class RotcContacts extends javax.swing.JFrame {
     private javax.swing.JMenuItem synchronizeCheckBox;
     private javax.swing.JMenuItem workingDirectoryMenuItem;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void update(Observable o, Object arg) {
+        //TODO: complete update method
+    }
 }
