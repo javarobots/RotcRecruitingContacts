@@ -5,6 +5,7 @@
 package ui;
 
 import javax.swing.JFileChooser;
+import ui.utility.ComponentPosition;
 
 /**
  *
@@ -30,6 +31,7 @@ public class RotcContacts extends javax.swing.JFrame {
 
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
+        exitMenuItem = new javax.swing.JMenuItem();
         statusMenu = new javax.swing.JMenu();
         workingDirectoryMenuItem = new javax.swing.JMenuItem();
         synchronizeCheckBox = new javax.swing.JMenuItem();
@@ -39,6 +41,15 @@ public class RotcContacts extends javax.swing.JFrame {
         setTitle("Det 014 Contacts");
 
         fileMenu.setText("File");
+
+        exitMenuItem.setText("Exit");
+        exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitMenuItemActionPerformed(evt);
+            }
+        });
+        fileMenu.add(exitMenuItem);
+
         menuBar.add(fileMenu);
 
         statusMenu.setText("Status");
@@ -84,6 +95,10 @@ public class RotcContacts extends javax.swing.JFrame {
         chooser.showDialog(this, "Select");
     }//GEN-LAST:event_workingDirectoryMenuItemActionPerformed
 
+    private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_exitMenuItemActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -91,7 +106,7 @@ public class RotcContacts extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -100,25 +115,23 @@ public class RotcContacts extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(RotcContacts.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(RotcContacts.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(RotcContacts.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(RotcContacts.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
-                new RotcContacts().setVisible(true);
+                RotcContacts instance = new RotcContacts();
+                ComponentPosition.centerFrame(instance);
+                instance.setVisible(true);
             }
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu statusMenu;
