@@ -14,10 +14,20 @@ public class RotcPreferences {
 
     private final String WORK_DIR = "working_directory";
     private final String SYNC_DIR = "sync_directory";
+    private final String WORK_DIR_SET = "work_dir_set";
+    private final String SYNC_DIR_SET = "sync_dir_set";
     private Preferences prefs;
+    private static RotcPreferences rotcPrefs = null;
 
-    public RotcPreferences() {
+    private RotcPreferences() {
         this.prefs = Preferences.systemNodeForPackage(this.getClass());
+    }
+
+    public static RotcPreferences getRotcPreferences() {
+        if (rotcPrefs == null){
+            rotcPrefs = new RotcPreferences();
+        }
+        return rotcPrefs;
     }
 
     public String getWorkDir() {
@@ -34,5 +44,21 @@ public class RotcPreferences {
 
     public void setSyncDir(String dirPath) {
         prefs.put(SYNC_DIR, dirPath);
+    }
+
+    public boolean getWorkDirSet() {
+        return prefs.getBoolean(WORK_DIR_SET, false);
+    }
+
+    public void setWorkSirSet(boolean setValue) {
+        prefs.putBoolean(WORK_DIR_SET, setValue);
+    }
+
+    public boolean getSyncDirSet() {
+        return prefs.getBoolean(SYNC_DIR_SET, false);
+    }
+
+    public void setSynDirSet(boolean setValue) {
+        prefs.putBoolean(WORK_DIR_SET, setValue);
     }
 }

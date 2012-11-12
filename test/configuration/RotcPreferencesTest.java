@@ -9,23 +9,17 @@ import org.junit.Test;
  */
 public class RotcPreferencesTest {
 
-    private static String WORK_DIR = "C:/Program Files/RotcContacts";
-    private static String SYNC_DIR = "C:/Program Files/RotcContactsSync";
-
-    public RotcPreferencesTest() {
-    }
-
     @Test
     public void testGetWorkDir() {
         System.out.println("getWorkDir");
-        RotcPreferences instance = new RotcPreferences();
+        RotcPreferences instance = RotcPreferences.getRotcPreferences();
         System.out.println(instance.getWorkDir());
     }
 
     @Test
     public void testSetWorkDir() {
         System.out.println("setWorkDir");
-        RotcPreferences instance = new RotcPreferences();
+        RotcPreferences instance = RotcPreferences.getRotcPreferences();
         String originalPath = instance.getWorkDir();
         instance.setWorkDir("C:/Test Path");
         Assert.assertEquals("C:/Test Path", instance.getWorkDir());
@@ -35,14 +29,14 @@ public class RotcPreferencesTest {
     @Test
     public void testSyncWorkDir() {
         System.out.println("getSyncDir");
-        RotcPreferences instance = new RotcPreferences();
+        RotcPreferences instance = RotcPreferences.getRotcPreferences();
         System.out.println(instance.getSyncDir());
     }
 
     @Test
     public void testSetSyncDir() {
         System.out.println("setSyncDir");
-        RotcPreferences instance = new RotcPreferences();
+        RotcPreferences instance = RotcPreferences.getRotcPreferences();
         String originalPath = instance.getSyncDir();
         instance.setSyncDir("C:/Test Path");
         Assert.assertEquals("C:/Test Path", instance.getSyncDir());
