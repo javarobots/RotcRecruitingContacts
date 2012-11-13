@@ -31,11 +31,11 @@ public class RotcPreferences {
     }
 
     public String getWorkDir() {
-        return prefs.get(WORK_DIR, "C:/Program Files/RotcContacts");
+        return prefs.get(WORK_DIR, "C:/Program Files");
     }
 
     public String getSyncDir() {
-        return prefs.get(SYNC_DIR, "C:/Program Files/RotcContactsSync");
+        return prefs.get(SYNC_DIR, "C:/Program Files");
     }
 
     public void setWorkDir(String dirPath) {
@@ -50,7 +50,7 @@ public class RotcPreferences {
         return prefs.getBoolean(WORK_DIR_SET, false);
     }
 
-    public void setWorkSirSet(boolean setValue) {
+    public void setWorkDirSet(boolean setValue) {
         prefs.putBoolean(WORK_DIR_SET, setValue);
     }
 
@@ -58,7 +58,7 @@ public class RotcPreferences {
         return prefs.getBoolean(SYNC_DIR_SET, false);
     }
 
-    public void setSynDirSet(boolean setValue) {
-        prefs.putBoolean(WORK_DIR_SET, setValue);
+    public void setSyncDirSet(boolean setValue) {
+        prefs.putBoolean(SYNC_DIR_SET, setValue);
     }
 }
