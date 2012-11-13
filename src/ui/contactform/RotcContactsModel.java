@@ -9,7 +9,27 @@ import java.util.Observable;
  */
 public class RotcContactsModel extends Observable {
 
-    private boolean wrokingDirectoryDefined = false;
+    private boolean workingDirectoryDefined = false;
     private boolean synchronizationDirectoryDefined = false;
+
+    public boolean isWorkingDirectoryDefined() {
+        return workingDirectoryDefined;
+    }
+
+    public void setWorkingDirectoryDefined(boolean workingDirectoryDefined) {
+        this.workingDirectoryDefined = workingDirectoryDefined;
+        setChanged();
+    }
+
+    public boolean isSynchronizationDirectoryDefined() {
+        return synchronizationDirectoryDefined;
+    }
+
+    public void setSynchronizationDirectoryDefined(boolean synchronizationDirectoryDefined) {
+        this.synchronizationDirectoryDefined = synchronizationDirectoryDefined;
+        setChanged();
+    }
+    
+    
 
 }
