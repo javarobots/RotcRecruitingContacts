@@ -6,7 +6,7 @@ package ui.contactform;
 
 import java.util.Observable;
 import java.util.Observer;
-import javax.swing.JFileChooser;
+import javax.swing.ImageIcon;
 import ui.utility.ComponentPosition;
 
 /**
@@ -33,16 +33,45 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         exitMenuItem = new javax.swing.JMenuItem();
         statusMenu = new javax.swing.JMenu();
         workingDirectoryMenuItem = new javax.swing.JMenuItem();
-        synchronizeCheckBox = new javax.swing.JMenuItem();
+        synchronizeDirectoryMenuItem = new javax.swing.JMenuItem();
         sycnhronizeCheckBox = new javax.swing.JCheckBoxMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Det 014 Contacts");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 795, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 551, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Contact", jPanel1);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 795, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 551, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Search", jPanel2);
 
         fileMenu.setText("File");
 
@@ -61,6 +90,7 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
 
         workingDirectoryMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/error_round_13x13.png"))); // NOI18N
         workingDirectoryMenuItem.setText("Working Directory");
+        workingDirectoryMenuItem.setToolTipText("Select the database working directory.");
         workingDirectoryMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 workingDirectoryMenuItemActionPerformed(evt);
@@ -68,11 +98,18 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
         });
         statusMenu.add(workingDirectoryMenuItem);
 
-        synchronizeCheckBox.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/error_round_13x13.png"))); // NOI18N
-        synchronizeCheckBox.setText("Synchronization Directory");
-        statusMenu.add(synchronizeCheckBox);
+        synchronizeDirectoryMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/error_round_13x13.png"))); // NOI18N
+        synchronizeDirectoryMenuItem.setText("Synchronization Directory");
+        synchronizeDirectoryMenuItem.setToolTipText("Select the synchronization directory.");
+        synchronizeDirectoryMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                synchronizeDirectoryMenuItemActionPerformed(evt);
+            }
+        });
+        statusMenu.add(synchronizeDirectoryMenuItem);
 
         sycnhronizeCheckBox.setText("Synchronize Data Source");
+        sycnhronizeCheckBox.setToolTipText("Copy the data source to the synchronization directory on shut down.");
         statusMenu.add(sycnhronizeCheckBox);
 
         menuBar.add(statusMenu);
@@ -83,25 +120,27 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 279, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 579, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void workingDirectoryMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_workingDirectoryMenuItemActionPerformed
-        JFileChooser chooser = new JFileChooser();
-        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        chooser.showDialog(this, "Select");
+        contactController.selectWorkingDirectory(this);
     }//GEN-LAST:event_workingDirectoryMenuItemActionPerformed
 
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
         System.exit(0);
     }//GEN-LAST:event_exitMenuItemActionPerformed
+
+    private void synchronizeDirectoryMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_synchronizeDirectoryMenuItemActionPerformed
+        contactController.selectSyncDirectory(this);
+    }//GEN-LAST:event_synchronizeDirectoryMenuItemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -130,8 +169,10 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
             public void run() {
                 RotcContacts instance = new RotcContacts();
 
-                contactController = new RotcContactsController(new RotcContactsModel());
-                contactController.checkConfiguration();
+                RotcContactsModel model = new RotcContactsModel();
+                model.addObserver(instance);
+                contactController = new RotcContactsController(model);
+                contactController.performInitialization();
 
                 ComponentPosition.centerFrame(instance);
                 instance.setVisible(true);
@@ -141,15 +182,37 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu statusMenu;
     private javax.swing.JCheckBoxMenuItem sycnhronizeCheckBox;
-    private javax.swing.JMenuItem synchronizeCheckBox;
+    private javax.swing.JMenuItem synchronizeDirectoryMenuItem;
     private javax.swing.JMenuItem workingDirectoryMenuItem;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void update(Observable o, Object arg) {
-        //TODO: complete update method
+        if (o instanceof RotcContactsModel){
+            RotcContactsModel model = (RotcContactsModel)o;
+            
+            //Update icon for working directory
+            ImageIcon menuItemIcon;
+            if (model.isWorkingDirectoryDefined()){
+                menuItemIcon = new ImageIcon(getClass().getResource("/images/check_round_13x13.png"));
+            } else {
+                menuItemIcon = new ImageIcon(getClass().getResource("/images/error_round_13x13.png"));
+            }
+            workingDirectoryMenuItem.setIcon(menuItemIcon);
+            
+            //Update icon for synchronization directory
+            if (model.isSynchronizationDirectoryDefined()){
+                menuItemIcon = new ImageIcon(getClass().getResource("/images/check_round_13x13.png"));
+            } else {
+                menuItemIcon = new ImageIcon(getClass().getResource("/images/error_round_13x13.png"));
+            }
+            synchronizeDirectoryMenuItem.setIcon(menuItemIcon);
+        }
     }
 }
