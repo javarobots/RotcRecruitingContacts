@@ -16,6 +16,7 @@ import ui.utility.ComponentPosition;
 public class RotcContacts extends javax.swing.JFrame implements Observer {
 
     private static RotcContactsController contactController;
+    private boolean lastNameFocus = false;
 
     /**
      * Creates new form RotcContacts
@@ -89,8 +90,10 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
         notesScrollPane.setViewportView(notesTextArea);
 
         submitButton.setText("Submit");
+        submitButton.setEnabled(false);
 
         majorLookupButton.setText("...");
+        majorLookupButton.setEnabled(false);
 
         javax.swing.GroupLayout contactPanelLayout = new javax.swing.GroupLayout(contactPanel);
         contactPanel.setLayout(contactPanelLayout);
@@ -344,7 +347,13 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
     public void update(Observable o, Object arg) {
         if (o instanceof RotcContactsModel){
             RotcContactsModel model = (RotcContactsModel)o;
-            
+
+            //Focus last name field
+            if (!lastNameFocus){
+                lastNameTextField.requestFocus();
+                lastNameFocus = true;
+            }
+
             //Update icon for working directory
             ImageIcon menuItemIcon;
             if (model.isWorkingDirectoryDefined()){
@@ -353,7 +362,7 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
                 menuItemIcon = new ImageIcon(getClass().getResource("/images/error_round_13x13.png"));
             }
             workingDirectoryMenuItem.setIcon(menuItemIcon);
-            
+
             //Update icon for synchronization directory
             if (model.isSynchronizationDirectoryDefined()){
                 menuItemIcon = new ImageIcon(getClass().getResource("/images/check_round_13x13.png"));

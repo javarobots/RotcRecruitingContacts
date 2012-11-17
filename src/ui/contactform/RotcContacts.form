@@ -279,11 +279,13 @@
             <Component class="javax.swing.JButton" name="submitButton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Submit"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="majorLookupButton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="..."/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
           </SubComponents>
