@@ -3,9 +3,13 @@ package ui.contactform;
 
 import configuration.RotcPreferences;
 import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JTextField;
+import org.apache.commons.io.FileUtils;
 
 /**
  *
@@ -29,6 +33,21 @@ public class RotcContactsController {
         model.setWorkingDirectoryDefined(prefs.getWorkDirSet());
         model.setSynchronizationDirectoryDefined(prefs.getSyncDirSet());
         model.notifyObservers();
+    }
+
+    public void initDatabase() {
+        if (model.isWorkingDirectoryDefined()){
+            RotcPreferences prefs = RotcPreferences.getRotcPreferences();
+            File dataSourceFile = new File(prefs.getWorkDir(), "contacts.mdb");
+            if (!dataSourceFile.exists()){
+                try {
+                    File sourceFile = new File((getClass().getResource("/resources/contacts.mdb")).toURI());
+                    FileUtils.copyFile(sourceFile, dataSourceFile);
+                } catch (URISyntaxException | IOException ex) {
+                    Logger.getLogger(RotcContactsController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
     }
 
     public void selectWorkingDirectory(JFrame frame) {
