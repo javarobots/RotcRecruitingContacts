@@ -4,6 +4,8 @@
  */
 package ui.contactform;
 
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.ImageIcon;
@@ -23,6 +25,45 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
      */
     public RotcContacts() {
         initComponents();
+        
+        this.addWindowListener(new WindowListener() {
+
+            @Override
+            public void windowOpened(WindowEvent e) {
+                //Do nothing
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+                //Do Nothing
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+                //Do nothing
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+                //Do nothing
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+                //Do nothing
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+                //Do nothing
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                contactController.closeDatabaseConnection();
+                System.exit(0);
+            }
+        });
     }
 
     /**
@@ -67,7 +108,7 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
         synchronizeDirectoryMenuItem = new javax.swing.JMenuItem();
         synchronizeCheckBox = new javax.swing.JCheckBoxMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Det 014 Contacts");
         setResizable(false);
 
@@ -279,6 +320,7 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
     }//GEN-LAST:event_workingDirectoryMenuItemActionPerformed
 
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
+        contactController.closeDatabaseConnection();
         System.exit(0);
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
@@ -362,7 +404,12 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
     private javax.swing.JLabel totalRecordsLabel;
     private javax.swing.JMenuItem workingDirectoryMenuItem;
     // End of variables declaration//GEN-END:variables
-
+    
+    private void enableMajorSubmitButtons(boolean enable) {
+        majorLookupButton.setEnabled(enable);
+        submitButton.setEnabled(enable);
+    }
+    
     @Override
     public void update(Observable o, Object arg) {
         if (o instanceof RotcContactsModel){
@@ -378,8 +425,10 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
             ImageIcon menuItemIcon;
             if (model.isWorkingDirectoryDefined()){
                 menuItemIcon = new ImageIcon(getClass().getResource("/images/check_round_13x13.png"));
+                enableMajorSubmitButtons(true);
             } else {
                 menuItemIcon = new ImageIcon(getClass().getResource("/images/error_round_13x13.png"));
+                enableMajorSubmitButtons(false);
             }
             workingDirectoryMenuItem.setIcon(menuItemIcon);
 

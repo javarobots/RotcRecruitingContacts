@@ -7,6 +7,7 @@ import database.MSAccessConnection;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -86,9 +87,17 @@ public class RotcContactsController {
         }
     }
 
-    void setUseSyncDirectory(boolean selected) {        
+    public void setUseSyncDirectory(boolean selected) {        
         RotcPreferences prefs = RotcPreferences.getRotcPreferences();
         prefs.setUseSyncDirectory(selected);
+    }
+    
+    public void closeDatabaseConnection() {
+        try {
+            model.getDatabaseConnection().close();
+        } catch (SQLException ex) {
+            Logger.getLogger(RotcContactsController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }
