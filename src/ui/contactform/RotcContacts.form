@@ -118,40 +118,46 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="notesLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="notesScrollPane" alignment="0" min="-2" pref="400" max="-2" attributes="0"/>
-                                  <Group type="102" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="lastNameLabel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="lastNameTextField" min="-2" pref="178" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="lastNameLabel" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                                  <Component id="lastNameTextField" max="32767" attributes="0"/>
-                                              </Group>
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Component id="phoneOneLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="firstNameLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="phoneTwoLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="gpaLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="actLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                      <Component id="firstNameTextField" max="32767" attributes="0"/>
-                                                      <Component id="phoneOneTextField" max="32767" attributes="0"/>
-                                                      <Component id="phoneTwoTextField" max="32767" attributes="0"/>
-                                                      <Component id="actTextField" alignment="0" pref="177" max="32767" attributes="0"/>
-                                                      <Component id="gpaTextField" alignment="0" max="32767" attributes="0"/>
-                                                      <Component id="majorTextField" alignment="0" pref="177" max="32767" attributes="0"/>
-                                                  </Group>
-                                              </Group>
-                                          </Group>
+                                          <Component id="phoneOneLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="firstNameLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="phoneTwoLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="gpaLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="actLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="majorLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="majorLookupButton" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                  <Component id="firstNameTextField" max="32767" attributes="0"/>
+                                                  <Component id="phoneOneTextField" max="32767" attributes="0"/>
+                                                  <Component id="phoneTwoTextField" max="32767" attributes="0"/>
+                                                  <Component id="actTextField" alignment="0" pref="177" max="32767" attributes="0"/>
+                                                  <Component id="gpaTextField" alignment="0" max="32767" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" attributes="0">
+                                              <Component id="majorComboBox" max="32767" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
                                   </Group>
+                              </Group>
+                              <Component id="majorLookupButton" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="notesLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="notesScrollPane" alignment="0" min="-2" pref="400" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
@@ -201,8 +207,8 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="majorLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="majorTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="majorLookupButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="majorComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="notesLabel" min="-2" max="-2" attributes="0"/>
@@ -266,8 +272,6 @@
                 <Property name="text" type="java.lang.String" value="Major:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="majorTextField">
-            </Component>
             <Component class="javax.swing.JLabel" name="notesLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Notes:"/>
@@ -299,10 +303,20 @@
                 <Property name="text" type="java.lang.String" value="..."/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="majorLookupButtonActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="totalRecordsLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Total Records: 0"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JComboBox" name="majorComboBox">
+              <Properties>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="0"/>
+                </Property>
               </Properties>
             </Component>
           </SubComponents>
