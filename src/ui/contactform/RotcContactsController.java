@@ -2,6 +2,8 @@
 package ui.contactform;
 
 import configuration.RotcPreferences;
+import database.MSAccessConfiguration;
+import database.MSAccessConnection;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -32,6 +34,12 @@ public class RotcContactsController {
         RotcPreferences prefs = RotcPreferences.getRotcPreferences();
         model.setWorkingDirectoryDefined(prefs.getWorkDirSet());
         model.setSynchronizationDirectoryDefined(prefs.getSyncDirSet());
+        model.setUseSyncDirectory(prefs.useSyncDirectory());
+        
+        //Init the database connection
+        MSAccessConfiguration databaseConfig = new MSAccessConfiguration("rotcContacts", "contacts.mdb");
+        model.setMSAccessConnection(new MSAccessConnection(databaseConfig));
+                
         model.notifyObservers();
     }
 
@@ -76,6 +84,11 @@ public class RotcContactsController {
             model.setSynchronizationDirectoryDefined(true);
             model.notifyObservers();
         }
+    }
+
+    void setUseSyncDirectory(boolean selected) {        
+        RotcPreferences prefs = RotcPreferences.getRotcPreferences();
+        prefs.setUseSyncDirectory(selected);
     }
 
 }

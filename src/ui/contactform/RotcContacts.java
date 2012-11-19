@@ -65,7 +65,7 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
         statusMenu = new javax.swing.JMenu();
         workingDirectoryMenuItem = new javax.swing.JMenuItem();
         synchronizeDirectoryMenuItem = new javax.swing.JMenuItem();
-        sycnhronizeCheckBox = new javax.swing.JCheckBoxMenuItem();
+        synchronizeCheckBox = new javax.swing.JCheckBoxMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Det 014 Contacts");
@@ -247,9 +247,14 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
         });
         statusMenu.add(synchronizeDirectoryMenuItem);
 
-        sycnhronizeCheckBox.setText("Synchronize Data Source");
-        sycnhronizeCheckBox.setToolTipText("Copy the data source to the synchronization directory on shut down.");
-        statusMenu.add(sycnhronizeCheckBox);
+        synchronizeCheckBox.setText("Synchronize Data Source");
+        synchronizeCheckBox.setToolTipText("Copy the data source to the synchronization directory on shut down.");
+        synchronizeCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                synchronizeCheckBoxActionPerformed(evt);
+            }
+        });
+        statusMenu.add(synchronizeCheckBox);
 
         menuBar.add(statusMenu);
 
@@ -280,6 +285,10 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
     private void synchronizeDirectoryMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_synchronizeDirectoryMenuItemActionPerformed
         contactController.selectSyncDirectory(this);
     }//GEN-LAST:event_synchronizeDirectoryMenuItemActionPerformed
+
+    private void synchronizeCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_synchronizeCheckBoxActionPerformed
+        contactController.setUseSyncDirectory(synchronizeCheckBox.isSelected());
+    }//GEN-LAST:event_synchronizeCheckBoxActionPerformed
 
     /**
      * @param args the command line arguments
@@ -347,7 +356,7 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
     private javax.swing.JPanel searchPanel;
     private javax.swing.JMenu statusMenu;
     private javax.swing.JButton submitButton;
-    private javax.swing.JCheckBoxMenuItem sycnhronizeCheckBox;
+    private javax.swing.JCheckBoxMenuItem synchronizeCheckBox;
     private javax.swing.JMenuItem synchronizeDirectoryMenuItem;
     private javax.swing.JTabbedPane tabbedPane;
     private javax.swing.JLabel totalRecordsLabel;
@@ -381,6 +390,12 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
                 menuItemIcon = new ImageIcon(getClass().getResource("/images/error_round_13x13.png"));
             }
             synchronizeDirectoryMenuItem.setIcon(menuItemIcon);
+            
+            //Set use sync directory
+            synchronizeCheckBox.setSelected(model.isUseSyncDirectory());
+            
+            //Update record count label
+            totalRecordsLabel.setText("Total Records: " + model.getRecordCount());
         }
     }
 }

@@ -49,11 +49,14 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="synchronizeDirectoryMenuItemActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="sycnhronizeCheckBox">
+            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="synchronizeCheckBox">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Synchronize Data Source"/>
                 <Property name="toolTipText" type="java.lang.String" value="Copy the data source to the synchronization directory on shut down."/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="synchronizeCheckBoxActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>

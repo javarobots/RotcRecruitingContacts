@@ -16,6 +16,7 @@ public class RotcPreferences {
     private final String SYNC_DIR = "sync_directory";
     private final String WORK_DIR_SET = "work_dir_set";
     private final String SYNC_DIR_SET = "sync_dir_set";
+    private final String USE_SYNC = "use_sync_dir";
     private Preferences prefs;
     private static RotcPreferences rotcPrefs = null;
 
@@ -60,5 +61,13 @@ public class RotcPreferences {
 
     public void setSyncDirSet(boolean setValue) {
         prefs.putBoolean(SYNC_DIR_SET, setValue);
+    }
+    
+    public boolean useSyncDirectory() {
+        return prefs.getBoolean(USE_SYNC, false);
+    }
+    
+    public void setUseSyncDirectory(boolean setValue) {
+        prefs.putBoolean(USE_SYNC, setValue);
     }
 }
