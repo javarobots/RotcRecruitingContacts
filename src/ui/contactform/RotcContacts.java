@@ -343,7 +343,7 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
     }//GEN-LAST:event_synchronizeCheckBoxActionPerformed
 
     private void majorLookupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_majorLookupButtonActionPerformed
-        AcademicMajorDialog dialog = new AcademicMajorDialog(this,true);
+        AcademicMajorDialog dialog = new AcademicMajorDialog(this,true,contactController.getModel());
         ComponentPosition.centerFrame(dialog);
         dialog.setVisible(true);
     }//GEN-LAST:event_majorLookupButtonActionPerformed
