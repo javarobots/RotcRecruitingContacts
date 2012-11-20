@@ -48,8 +48,8 @@ public class RotcContactsModel extends Observable {
     
     public void setMSAccessConnection(MSAccessConnection connection){
         this.dataSourceConnection = connection;
-        ContactQueries query = new ContactQueries(dataSourceConnection.getConnection());
-        recordCount = query.getContactCount();
+        queries = new ContactQueries(dataSourceConnection.getConnection());
+        recordCount = queries.getContactCount();
         setChanged();
     }
     
@@ -63,5 +63,9 @@ public class RotcContactsModel extends Observable {
     
     public void setRecordCount(int count) {
         recordCount = count;
+    }
+    
+    public ContactQueries getQueries() {
+        return queries;
     }
 }
