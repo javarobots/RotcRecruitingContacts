@@ -13,7 +13,7 @@ import ui.queries.ContactQueries;
  * @author javarobots74
  */
 public class AcademicMajorDialog extends javax.swing.JDialog {
-    
+
     private AcademicMajorTableModel tableModel;
     private ContactQueries databaseQueries;
 
@@ -25,7 +25,7 @@ public class AcademicMajorDialog extends javax.swing.JDialog {
         initComponents();
         initTable();
     }
-    
+
     public AcademicMajorDialog(java.awt.Frame parent, boolean modal, RotcContactsModel model) {
         super(parent, modal);
         initComponents();
@@ -162,21 +162,21 @@ public class AcademicMajorDialog extends javax.swing.JDialog {
     private void initTable() {
         //Set table model
         tableModel = new AcademicMajorTableModel();
-        academicMajorTable.setModel(tableModel);        
+        academicMajorTable.setModel(tableModel);
         academicMajorTable.setCellSelectionEnabled(false);
         academicMajorTable.setRowSelectionAllowed(true);
-        
+
         //Adjust column widths of table
-        academicMajorTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);        
+        academicMajorTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         int scrollPaneWidth = academicMajorTable.getParent().getWidth();
         int firstColumnWidth = 40;
         academicMajorTable.getColumnModel().getColumn(0).setPreferredWidth(firstColumnWidth);
         academicMajorTable.getColumnModel().getColumn(1).setPreferredWidth(scrollPaneWidth - firstColumnWidth);
-        
+
         //Load data to table model
         tableModel.updateTableData(databaseQueries.getAcademicMajors());
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel academicMajorLabel;
     private javax.swing.JScrollPane academicMajorScrollPane;

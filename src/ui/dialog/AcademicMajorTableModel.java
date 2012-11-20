@@ -16,10 +16,10 @@ import javax.swing.table.AbstractTableModel;
  * @author javarobots74
  */
 public class AcademicMajorTableModel extends AbstractTableModel {
-    
+
     private String[] headingNames = {"ID", "Academic Major"};
     private ArrayList<ArrayList<String>> tableData;
-    
+
     public AcademicMajorTableModel(){
         tableData = new ArrayList<>();
         ArrayList<String> dataList = new ArrayList<>();
@@ -27,7 +27,7 @@ public class AcademicMajorTableModel extends AbstractTableModel {
         dataList = new ArrayList<>();
         tableData.add(dataList);
     }
-    
+
     @Override
     public String getColumnName(int columnIndex){
         return headingNames[columnIndex];
@@ -47,12 +47,12 @@ public class AcademicMajorTableModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         return tableData.get(columnIndex).get(rowIndex);
     }
-    
+
     /**
      * Clears the table data and then re-populates
      * the data lists based on the provided result
      * set.
-     * @param result 
+     * @param result
      */
     public void updateTableData(ResultSet result){
         try {
@@ -69,5 +69,5 @@ public class AcademicMajorTableModel extends AbstractTableModel {
             Logger.getLogger(AcademicMajorTableModel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
 }

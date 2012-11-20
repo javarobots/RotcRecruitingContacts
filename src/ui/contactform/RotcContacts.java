@@ -26,7 +26,7 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
      */
     public RotcContacts() {
         initComponents();
-        
+
         this.addWindowListener(new WindowListener() {
 
             @Override
@@ -420,12 +420,12 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
     private javax.swing.JLabel totalRecordsLabel;
     private javax.swing.JMenuItem workingDirectoryMenuItem;
     // End of variables declaration//GEN-END:variables
-    
+
     private void enableMajorSubmitButtons(boolean enable) {
         majorLookupButton.setEnabled(enable);
         submitButton.setEnabled(enable);
     }
-    
+
     @Override
     public void update(Observable o, Object arg) {
         if (o instanceof RotcContactsModel){
@@ -455,10 +455,10 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
                 menuItemIcon = new ImageIcon(getClass().getResource("/images/error_round_13x13.png"));
             }
             synchronizeDirectoryMenuItem.setIcon(menuItemIcon);
-            
+
             //Set use sync directory
             synchronizeCheckBox.setSelected(model.isUseSyncDirectory());
-            
+
             //Update record count label
             totalRecordsLabel.setText("Total Records: " + model.getRecordCount());
         }

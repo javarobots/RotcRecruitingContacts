@@ -16,13 +16,13 @@ import java.util.logging.Logger;
  * @author javarobots74
  */
 public class ContactQueries {
-    
+
     private Connection dataConnection;
-    
+
     public ContactQueries(Connection connection) {
         this.dataConnection = connection;
     }
-    
+
     public int getContactCount(){
         int count = 0;
         try{
@@ -35,8 +35,8 @@ public class ContactQueries {
         }
         return count;
     }
-    
-    public ResultSet getAcademicMajors(){        
+
+    public ResultSet getAcademicMajors(){
         ResultSet result = null;
         try {
             Statement statement = dataConnection.createStatement();
@@ -46,16 +46,16 @@ public class ContactQueries {
         }
         return result;
     }
-    
+
     public void addAcademicMajor(String major){
         try {
             Statement statement = dataConnection.createStatement();
             statement.execute("INSERT INTO majors(major) VALUES('" + major + "');");
         } catch (SQLException ex) {
             Logger.getLogger(ContactQueries.class.getName()).log(Level.SEVERE, null, ex);
-        }        
+        }
     }
-    
+
     public void deleteAcademicMajor(String id){
         try {
             Statement statement = dataConnection.createStatement();
@@ -64,5 +64,5 @@ public class ContactQueries {
             Logger.getLogger(ContactQueries.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
 }

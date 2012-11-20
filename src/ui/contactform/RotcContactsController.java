@@ -36,11 +36,11 @@ public class RotcContactsController {
         model.setWorkingDirectoryDefined(prefs.getWorkDirSet());
         model.setSynchronizationDirectoryDefined(prefs.getSyncDirSet());
         model.setUseSyncDirectory(prefs.useSyncDirectory());
-        
+
         //Init the database connection
         MSAccessConfiguration databaseConfig = new MSAccessConfiguration("rotcContacts", "contacts.mdb");
         model.setMSAccessConnection(new MSAccessConnection(databaseConfig));
-                
+
         model.notifyObservers();
     }
 
@@ -87,11 +87,11 @@ public class RotcContactsController {
         }
     }
 
-    public void setUseSyncDirectory(boolean selected) {        
+    public void setUseSyncDirectory(boolean selected) {
         RotcPreferences prefs = RotcPreferences.getRotcPreferences();
         prefs.setUseSyncDirectory(selected);
     }
-    
+
     public void closeDatabaseConnection() {
         try {
             model.getDatabaseConnection().close();
@@ -99,7 +99,7 @@ public class RotcContactsController {
             Logger.getLogger(RotcContactsController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public RotcContactsModel getModel(){
         return model;
     }
