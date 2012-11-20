@@ -5,6 +5,8 @@
 package ui.dialog;
 
 import javax.swing.JTable;
+import ui.contactform.RotcContactsModel;
+import ui.queries.ContactQueries;
 
 /**
  *
@@ -13,6 +15,7 @@ import javax.swing.JTable;
 public class AcademicMajorDialog extends javax.swing.JDialog {
     
     private AcademicMajorTableModel tableModel;
+    private ContactQueries databaseQueries;
 
     /**
      * Creates new form AcademicMajorDialog
@@ -20,17 +23,14 @@ public class AcademicMajorDialog extends javax.swing.JDialog {
     public AcademicMajorDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
-        //Set table model
-        tableModel = new AcademicMajorTableModel();
-        academicMajorTable.setModel(tableModel);
-        
-        //Adjust column widths of table
-        academicMajorTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        int scrollPaneWidth = academicMajorTable.getParent().getWidth();
-        int firstColumnWidth = 40;
-        academicMajorTable.getColumnModel().getColumn(0).setPreferredWidth(firstColumnWidth);
-        academicMajorTable.getColumnModel().getColumn(1).setPreferredWidth(scrollPaneWidth - firstColumnWidth);
+        initTable();
+    }
+    
+    public AcademicMajorDialog(java.awt.Frame parent, boolean modal, RotcContactsModel model) {
+        super(parent, modal);
+        initComponents();
+        this.databaseQueries = model.getQueries();
+        initTable();
     }
 
     /**
@@ -48,6 +48,7 @@ public class AcademicMajorDialog extends javax.swing.JDialog {
         academicMajorTable = new javax.swing.JTable();
         addButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
+        cancelButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Academic Majors");
@@ -82,6 +83,18 @@ public class AcademicMajorDialog extends javax.swing.JDialog {
 
         deleteButton.setText("Delete");
         deleteButton.setToolTipText("Delete the selected major(s).");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteButtonActionPerformed(evt);
+            }
+        });
+
+        cancelButton.setText("Cancel");
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -97,13 +110,15 @@ public class AcademicMajorDialog extends javax.swing.JDialog {
                         .addComponent(academicMajorTextField))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(cancelButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(deleteButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(addButton)))
                 .addContainerGap())
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {addButton, deleteButton});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {addButton, cancelButton, deleteButton});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -117,7 +132,8 @@ public class AcademicMajorDialog extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addButton)
-                    .addComponent(deleteButton))
+                    .addComponent(deleteButton)
+                    .addComponent(cancelButton))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -125,15 +141,49 @@ public class AcademicMajorDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        if (!academicMajorTextField.getText().isEmpty()){
+            databaseQueries.addAcademicMajor(academicMajorTextField.getText());
+        }
         this.dispose();
     }//GEN-LAST:event_addButtonActionPerformed
 
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_cancelButtonActionPerformed
+
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        if (academicMajorTable.getSelectedRow() > -1){
+            String id = (String) academicMajorTable.getModel().getValueAt(academicMajorTable.getSelectedRow(), 0);
+            databaseQueries.deleteAcademicMajor(id);
+            this.dispose();
+        }
+    }//GEN-LAST:event_deleteButtonActionPerformed
+
+    private void initTable() {
+        //Set table model
+        tableModel = new AcademicMajorTableModel();
+        academicMajorTable.setModel(tableModel);        
+        academicMajorTable.setCellSelectionEnabled(false);
+        academicMajorTable.setRowSelectionAllowed(true);
+        
+        //Adjust column widths of table
+        academicMajorTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);        
+        int scrollPaneWidth = academicMajorTable.getParent().getWidth();
+        int firstColumnWidth = 40;
+        academicMajorTable.getColumnModel().getColumn(0).setPreferredWidth(firstColumnWidth);
+        academicMajorTable.getColumnModel().getColumn(1).setPreferredWidth(scrollPaneWidth - firstColumnWidth);
+        
+        //Load data to table model
+        tableModel.updateTableData(databaseQueries.getAcademicMajors());
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel academicMajorLabel;
     private javax.swing.JScrollPane academicMajorScrollPane;
     private javax.swing.JTable academicMajorTable;
     private javax.swing.JTextField academicMajorTextField;
     private javax.swing.JButton addButton;
+    private javax.swing.JButton cancelButton;
     private javax.swing.JButton deleteButton;
     // End of variables declaration//GEN-END:variables
 }
