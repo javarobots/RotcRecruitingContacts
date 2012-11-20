@@ -99,5 +99,9 @@ public class RotcContactsController {
             Logger.getLogger(RotcContactsController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public RotcContactsModel getModel(){
+        return model;
+    }
 
 }
