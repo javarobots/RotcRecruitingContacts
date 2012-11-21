@@ -8,6 +8,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import ui.dialog.AcademicMajorDialog;
 import ui.utility.ComponentPosition;
@@ -26,7 +27,7 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
      */
     public RotcContacts() {
         initComponents();
-
+        
         this.addWindowListener(new WindowListener() {
 
             @Override
@@ -461,6 +462,14 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
 
             //Update record count label
             totalRecordsLabel.setText("Total Records: " + model.getRecordCount());
+            
+            //Update academic combo box
+            DefaultComboBoxModel majorModel = (DefaultComboBoxModel) majorComboBox.getModel();
+            majorModel.removeAllElements();
+            for(String s : model.getAcademicMajors()){
+                majorModel.addElement(s);
+            }
+            
         }
     }
 }

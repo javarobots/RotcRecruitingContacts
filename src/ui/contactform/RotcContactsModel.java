@@ -3,6 +3,7 @@ package ui.contactform;
 
 import database.MSAccessConnection;
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.Observable;
 import ui.queries.ContactQueries;
 
@@ -18,6 +19,7 @@ public class RotcContactsModel extends Observable {
     private MSAccessConnection dataSourceConnection;
     private ContactQueries queries;
     private int recordCount = 0;
+    private ArrayList<String> academicMajors;
 
     public boolean isWorkingDirectoryDefined() {
         return workingDirectoryDefined;
@@ -68,4 +70,15 @@ public class RotcContactsModel extends Observable {
     public ContactQueries getQueries() {
         return queries;
     }
+
+    public ArrayList<String> getAcademicMajors() {
+        return academicMajors;
+    }
+
+    public void setAcademicMajors(ArrayList<String> academicMajors) {
+        this.academicMajors = academicMajors;
+        setChanged();
+    }
+    
+    
 }

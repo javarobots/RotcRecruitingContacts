@@ -7,7 +7,9 @@ import database.MSAccessConnection;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -32,16 +34,28 @@ public class RotcContactsController {
      * path information.
      */
     public void performInitialization() {
-        RotcPreferences prefs = RotcPreferences.getRotcPreferences();
-        model.setWorkingDirectoryDefined(prefs.getWorkDirSet());
-        model.setSynchronizationDirectoryDefined(prefs.getSyncDirSet());
-        model.setUseSyncDirectory(prefs.useSyncDirectory());
+        try {
+            RotcPreferences prefs = RotcPreferences.getRotcPreferences();
+            model.setWorkingDirectoryDefined(prefs.getWorkDirSet());
+            model.setSynchronizationDirectoryDefined(prefs.getSyncDirSet());
+            model.setUseSyncDirectory(prefs.useSyncDirectory());
 
-        //Init the database connection
-        MSAccessConfiguration databaseConfig = new MSAccessConfiguration("rotcContacts", "contacts.mdb");
-        model.setMSAccessConnection(new MSAccessConnection(databaseConfig));
-
-        model.notifyObservers();
+            //Init the database connection
+            MSAccessConfiguration databaseConfig = new MSAccessConfiguration("rotcContacts", "contacts.mdb");
+            model.setMSAccessConnection(new MSAccessConnection(databaseConfig));
+            
+            //Init academic major list
+            ResultSet majors = model.getQueries().getAcademicMajors();
+            ArrayList<String> majorList = new ArrayList<>();
+            while(majors.next()){
+                majorList.add(majors.getString("major"));
+            }
+            model.setAcademicMajors(majorList);
+            
+            model.notifyObservers();
+        } catch (SQLException ex) {
+            Logger.getLogger(RotcContactsController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void initDatabase() {

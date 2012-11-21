@@ -4,6 +4,11 @@
  */
 package ui.dialog;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JTable;
 import ui.contactform.RotcContactsModel;
 import ui.queries.ContactQueries;
@@ -15,6 +20,7 @@ import ui.queries.ContactQueries;
 public class AcademicMajorDialog extends javax.swing.JDialog {
 
     private AcademicMajorTableModel tableModel;
+    private RotcContactsModel contactsModel;
     private ContactQueries databaseQueries;
 
     /**
@@ -29,6 +35,7 @@ public class AcademicMajorDialog extends javax.swing.JDialog {
     public AcademicMajorDialog(java.awt.Frame parent, boolean modal, RotcContactsModel model) {
         super(parent, modal);
         initComponents();
+        this.contactsModel = model;
         this.databaseQueries = model.getQueries();
         initTable();
     }
@@ -144,6 +151,7 @@ public class AcademicMajorDialog extends javax.swing.JDialog {
         if (!academicMajorTextField.getText().isEmpty()){
             databaseQueries.addAcademicMajor(academicMajorTextField.getText());
         }
+        updateContactsModel();
         this.dispose();
     }//GEN-LAST:event_addButtonActionPerformed
 
@@ -155,6 +163,7 @@ public class AcademicMajorDialog extends javax.swing.JDialog {
         if (academicMajorTable.getSelectedRow() > -1){
             String id = (String) academicMajorTable.getModel().getValueAt(academicMajorTable.getSelectedRow(), 0);
             databaseQueries.deleteAcademicMajor(id);
+            updateContactsModel();
             this.dispose();
         }
     }//GEN-LAST:event_deleteButtonActionPerformed
@@ -175,6 +184,20 @@ public class AcademicMajorDialog extends javax.swing.JDialog {
 
         //Load data to table model
         tableModel.updateTableData(databaseQueries.getAcademicMajors());
+    }
+    
+    private void updateContactsModel(){
+        try {
+            ResultSet majors = databaseQueries.getAcademicMajors();
+            ArrayList<String> majorList = new ArrayList<>();
+            while (majors.next()){
+                majorList.add(majors.getString("major"));
+            }
+            contactsModel.setAcademicMajors(majorList);
+            contactsModel.notifyObservers();
+        } catch (SQLException ex) {
+            Logger.getLogger(AcademicMajorDialog.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
