@@ -6,6 +6,7 @@ package ui.contactform;
 
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.DefaultComboBoxModel;
@@ -27,7 +28,7 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
      */
     public RotcContacts() {
         initComponents();
-        
+
         this.addWindowListener(new WindowListener() {
 
             @Override
@@ -442,7 +443,6 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
             ImageIcon menuItemIcon;
             if (model.isWorkingDirectoryDefined()){
                 menuItemIcon = new ImageIcon(getClass().getResource("/images/check_round_13x13.png"));
-                enableMajorSubmitButtons(true);
             } else {
                 menuItemIcon = new ImageIcon(getClass().getResource("/images/error_round_13x13.png"));
                 enableMajorSubmitButtons(false);
@@ -462,14 +462,22 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
 
             //Update record count label
             totalRecordsLabel.setText("Total Records: " + model.getRecordCount());
-            
+
             //Update academic combo box
             DefaultComboBoxModel majorModel = (DefaultComboBoxModel) majorComboBox.getModel();
             majorModel.removeAllElements();
-            for(String s : model.getAcademicMajors()){
-                majorModel.addElement(s);
+            ArrayList<String> majors = model.getAcademicMajors();
+            if (majors != null){
+                for(String s : model.getAcademicMajors()){
+                    majorModel.addElement(s);
+                }
             }
-            
+
+            //Check if submit and mjor button should be enabled
+            if (model.isEnableButtons()){
+                enableMajorSubmitButtons(true);
+            }
+
         }
     }
 }
