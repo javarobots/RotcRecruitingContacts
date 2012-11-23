@@ -22,6 +22,7 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
 
     private static RotcContactsController contactController;
     private boolean lastNameFocus = false;
+    private boolean dataUpdate = false;
 
     /**
      * Creates new form RotcContacts
@@ -137,6 +138,11 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
 
         submitButton.setText("Submit");
         submitButton.setEnabled(false);
+        submitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submitButtonActionPerformed(evt);
+            }
+        });
 
         majorLookupButton.setText("...");
         majorLookupButton.setEnabled(false);
@@ -350,6 +356,19 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
         dialog.setVisible(true);
     }//GEN-LAST:event_majorLookupButtonActionPerformed
 
+    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
+        Object[] data = new Object[8];
+        data[0] = lastNameTextField.getText();
+        data[1] = firstNameTextField.getText();
+        data[2] = phoneOneTextField.getText();
+        data[3] = phoneTwoTextField.getText();
+        data[4] = gpaTextField.getText();
+        data[5] = actTextField.getText();
+        data[6] = majorComboBox.getSelectedIndex();
+        data[7] = notesTextArea.getText();
+        contactController.submitData(data,dataUpdate);
+    }//GEN-LAST:event_submitButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -477,6 +496,9 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
             if (model.isEnableButtons()){
                 enableMajorSubmitButtons(true);
             }
+
+            //See if data is being updated
+            dataUpdate = model.isUpdateData();
 
         }
     }

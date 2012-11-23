@@ -122,4 +122,8 @@ public class RotcContactsController {
         return model;
     }
 
+    void submitData(Object[] data, boolean dataUpdate) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
 }

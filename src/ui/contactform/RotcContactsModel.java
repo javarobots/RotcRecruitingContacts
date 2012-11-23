@@ -6,8 +6,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Observable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import ui.dialog.BadConfigurationDialog;
 import ui.queries.ContactQueries;
 import ui.utility.ComponentPosition;
@@ -26,6 +24,7 @@ public class RotcContactsModel extends Observable {
     private ContactQueries queries;
     private int recordCount = 0;
     private ArrayList<String> academicMajors;
+    private boolean updateData = false;
 
     public boolean isWorkingDirectoryDefined() {
         return workingDirectoryDefined;
@@ -106,6 +105,15 @@ public class RotcContactsModel extends Observable {
 
     public void setEnableButtons(boolean enableButtons) {
         this.enableButtons = enableButtons;
+        setChanged();
+    }
+
+    public boolean isUpdateData() {
+        return updateData;
+    }
+
+    public void setUpdateData(boolean updateData) {
+        this.updateData = updateData;
         setChanged();
     }
 
