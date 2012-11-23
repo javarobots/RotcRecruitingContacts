@@ -7,6 +7,7 @@ import database.MSAccessConnection;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -34,16 +35,17 @@ public class RotcContactsController {
      * path information.
      */
     public void performInitialization() {
-        try {
-            RotcPreferences prefs = RotcPreferences.getRotcPreferences();
-            model.setWorkingDirectoryDefined(prefs.getWorkDirSet());
-            model.setSynchronizationDirectoryDefined(prefs.getSyncDirSet());
-            model.setUseSyncDirectory(prefs.useSyncDirectory());
+        RotcPreferences prefs = RotcPreferences.getRotcPreferences();
+        model.setWorkingDirectoryDefined(prefs.getWorkDirSet());
+        model.setSynchronizationDirectoryDefined(prefs.getSyncDirSet());
+        model.setUseSyncDirectory(prefs.useSyncDirectory());
 
-            //Init the database connection
-            MSAccessConfiguration databaseConfig = new MSAccessConfiguration("rotcContacts", "contacts.mdb");
+        //Init the database connection
+        MSAccessConfiguration databaseConfig = new MSAccessConfiguration("rotcContacts", "contacts.mdb");
+        try {
             model.setMSAccessConnection(new MSAccessConnection(databaseConfig));
-            
+            model.setEnableButtons(true);
+
             //Init academic major list
             ResultSet majors = model.getQueries().getAcademicMajors();
             ArrayList<String> majorList = new ArrayList<>();
@@ -51,11 +53,10 @@ public class RotcContactsController {
                 majorList.add(majors.getString("major"));
             }
             model.setAcademicMajors(majorList);
-            
-            model.notifyObservers();
         } catch (SQLException ex) {
             Logger.getLogger(RotcContactsController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        model.notifyObservers();
     }
 
     public void initDatabase() {
@@ -108,7 +109,10 @@ public class RotcContactsController {
 
     public void closeDatabaseConnection() {
         try {
-            model.getDatabaseConnection().close();
+            Connection connection = model.getDatabaseConnection();
+            if (connection != null){
+                connection.close();
+            }
         } catch (SQLException ex) {
             Logger.getLogger(RotcContactsController.class.getName()).log(Level.SEVERE, null, ex);
         }
