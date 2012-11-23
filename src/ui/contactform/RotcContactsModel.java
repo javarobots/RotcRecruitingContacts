@@ -3,9 +3,14 @@ package ui.contactform;
 
 import database.MSAccessConnection;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Observable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import ui.dialog.BadConfigurationDialog;
 import ui.queries.ContactQueries;
+import ui.utility.ComponentPosition;
 
 /**
  *
@@ -16,6 +21,7 @@ public class RotcContactsModel extends Observable {
     private boolean workingDirectoryDefined = false;
     private boolean synchronizationDirectoryDefined = false;
     private boolean useSyncDirectory = false;
+    private boolean enableButtons = false;
     private MSAccessConnection dataSourceConnection;
     private ContactQueries queries;
     private int recordCount = 0;
@@ -47,26 +53,33 @@ public class RotcContactsModel extends Observable {
         this.useSyncDirectory = useSyncDirectory;
         setChanged();
     }
-    
-    public void setMSAccessConnection(MSAccessConnection connection){
-        this.dataSourceConnection = connection;
-        queries = new ContactQueries(dataSourceConnection.getConnection());
-        recordCount = queries.getContactCount();
-        setChanged();
+
+    public void setMSAccessConnection(MSAccessConnection connection) throws SQLException{
+            this.dataSourceConnection = connection;
+            queries = new ContactQueries(dataSourceConnection.getConnection());
+            recordCount = queries.getContactCount();
+            setChanged();
     }
-    
+
     public Connection getDatabaseConnection(){
-        return dataSourceConnection.getConnection();
+        Connection connection = null;
+        try {
+            connection = dataSourceConnection.getConnection();
+        } catch (SQLException ex) {
+            //Do nothing
+            //TODO: fix this
+        }
+        return connection;
     }
 
     public int getRecordCount() {
         return recordCount;
     }
-    
+
     public void setRecordCount(int count) {
         recordCount = count;
     }
-    
+
     public ContactQueries getQueries() {
         return queries;
     }
@@ -79,6 +92,21 @@ public class RotcContactsModel extends Observable {
         this.academicMajors = academicMajors;
         setChanged();
     }
-    
-    
+
+    private void showBadConfigurationDialog(String dataSourceName, String dataSourceFileName) {
+        BadConfigurationDialog dialog = new BadConfigurationDialog(null, true);
+        dialog.setNames(dataSourceName, dataSourceFileName);
+        ComponentPosition.centerFrame(dialog);
+        dialog.setVisible(true);
+    }
+
+    public boolean isEnableButtons() {
+        return enableButtons;
+    }
+
+    public void setEnableButtons(boolean enableButtons) {
+        this.enableButtons = enableButtons;
+        setChanged();
+    }
+
 }
