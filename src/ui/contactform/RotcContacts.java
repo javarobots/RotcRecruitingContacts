@@ -107,6 +107,10 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
         searchPanel = new javax.swing.JPanel();
         searchLastNameLabel = new javax.swing.JLabel();
         searchLastNameTextField = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         exitMenuItem = new javax.swing.JMenuItem();
@@ -141,11 +145,6 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
 
         submitButton.setText("Submit");
         submitButton.setEnabled(false);
-        submitButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                submitButtonActionPerformed(evt);
-            }
-        });
 
         majorLookupButton.setText("...");
         majorLookupButton.setEnabled(false);
@@ -274,6 +273,39 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
 
         tabbedPane.addTab("Search", searchPanel);
 
+        jLabel1.setText("Contact ID:");
+
+        jButton1.setText("Delete");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(256, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 327, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addContainerGap())
+        );
+
+        tabbedPane.addTab("Delete", jPanel1);
+
         fileMenu.setText("File");
 
         exitMenuItem.setText("Exit");
@@ -359,22 +391,6 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
         dialog.setVisible(true);
     }//GEN-LAST:event_majorLookupButtonActionPerformed
 
-    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
-        Object[] data = new Object[9];
-        data[0] = lastNameTextField.getText();
-        data[1] = firstNameTextField.getText();
-        data[2] = phoneOneTextField.getText();
-        data[3] = phoneTwoTextField.getText();
-        data[4] = gpaTextField.getText();
-        data[5] = actTextField.getText();
-        data[6] = majorComboBox.getSelectedIndex();
-        data[7] = notesTextArea.getText();
-        //Build the contact date
-        Date now = new Date(System.currentTimeMillis());
-        data[8] = now.toString();
-        contactController.submitData(data,dataUpdate);
-    }//GEN-LAST:event_submitButtonActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -423,6 +439,10 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
     private javax.swing.JTextField firstNameTextField;
     private javax.swing.JLabel gpaLabel;
     private javax.swing.JTextField gpaTextField;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lastNameLabel;
     private javax.swing.JTextField lastNameTextField;
     private javax.swing.JComboBox majorComboBox;
