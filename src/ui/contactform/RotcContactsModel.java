@@ -92,13 +92,6 @@ public class RotcContactsModel extends Observable {
         setChanged();
     }
 
-    private void showBadConfigurationDialog(String dataSourceName, String dataSourceFileName) {
-        BadConfigurationDialog dialog = new BadConfigurationDialog(null, true);
-        dialog.setNames(dataSourceName, dataSourceFileName);
-        ComponentPosition.centerFrame(dialog);
-        dialog.setVisible(true);
-    }
-
     public boolean isEnableButtons() {
         return enableButtons;
     }

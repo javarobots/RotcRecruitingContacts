@@ -16,6 +16,8 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import org.apache.commons.io.FileUtils;
+import ui.dialog.BadConfigurationDialog;
+import ui.utility.ComponentPosition;
 
 /**
  *
@@ -24,6 +26,8 @@ import org.apache.commons.io.FileUtils;
 public class RotcContactsController {
 
     private RotcContactsModel model;
+    private final String DATA_SOURCE_NAME = "rotcContacts";
+    private final String DATA_SOURCE_FILE_NAME = "contacts.mdb";
 
     public RotcContactsController(RotcContactsModel model) {
         this.model = model;
@@ -41,7 +45,7 @@ public class RotcContactsController {
         model.setUseSyncDirectory(prefs.useSyncDirectory());
 
         //Init the database connection
-        MSAccessConfiguration databaseConfig = new MSAccessConfiguration("rotcContacts", "contacts.mdb");
+        MSAccessConfiguration databaseConfig = new MSAccessConfiguration(DATA_SOURCE_NAME, DATA_SOURCE_FILE_NAME);
         try {
             model.setMSAccessConnection(new MSAccessConnection(databaseConfig));
             model.setEnableButtons(true);
@@ -54,7 +58,7 @@ public class RotcContactsController {
             }
             model.setAcademicMajors(majorList);
         } catch (SQLException ex) {
-            Logger.getLogger(RotcContactsController.class.getName()).log(Level.SEVERE, null, ex);
+            showBadConfigurationDialog(DATA_SOURCE_NAME, DATA_SOURCE_FILE_NAME);
         }
         model.notifyObservers();
     }
@@ -122,8 +126,15 @@ public class RotcContactsController {
         return model;
     }
 
-    void submitData(Object[] data, boolean dataUpdate) {
+    public void submitData(Object[] data, boolean dataUpdate) {
         throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    private void showBadConfigurationDialog(String dataSourceName, String dataSourceFileName) {
+        BadConfigurationDialog dialog = new BadConfigurationDialog(null, true);
+        dialog.setNames(dataSourceName, dataSourceFileName);
+        ComponentPosition.centerFrame(dialog);
+        dialog.setVisible(true);
     }
 
 }
