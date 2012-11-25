@@ -14,6 +14,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import ui.dialog.AcademicMajorDialog;
 import ui.utility.ComponentPosition;
+import ui.utility.SearchKeyListener;
 
 /**
  *
@@ -30,6 +31,7 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
      */
     public RotcContacts() {
         initComponents();
+        searchLastNameTextField.addKeyListener(new SearchKeyListener());
 
         this.addWindowListener(new WindowListener() {
 
