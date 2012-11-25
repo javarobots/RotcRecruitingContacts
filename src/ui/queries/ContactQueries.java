@@ -67,6 +67,7 @@ public class ContactQueries {
 
     public void addContact(Object[] data) {
         try {
+            //TODO: Build map of indexes based on databse for major so query will execute properly
             Statement statement = dataConnection.createStatement();
             statement.execute("INSERT INTO contacts (ContactDate, LastName, FirstName, Phone1, Phone2, GPA, ACTSAT, major, Notes)" +
                                 " VALUES ({d'" + data[8] + "'},'" + data[0] + "','" + data[1] + "','" + data[2] + "','" + data[3] + "','" +
