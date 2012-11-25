@@ -39,13 +39,9 @@ public class RotcContactsController {
      * path information.
      */
     public void performInitialization() {
-        RotcPreferences prefs = RotcPreferences.getRotcPreferences();
-        model.setWorkingDirectoryDefined(prefs.getWorkDirSet());
-        model.setSynchronizationDirectoryDefined(prefs.getSyncDirSet());
-        model.setUseSyncDirectory(prefs.useSyncDirectory());
-
         //Init the database connection
         MSAccessConfiguration databaseConfig = new MSAccessConfiguration(DATA_SOURCE_NAME, DATA_SOURCE_FILE_NAME);
+
         try {
             model.setMSAccessConnection(new MSAccessConnection(databaseConfig));
             model.setEnableButtons(true);
@@ -64,9 +60,13 @@ public class RotcContactsController {
     }
 
     public void initDatabase() {
+        RotcPreferences prefs = RotcPreferences.getRotcPreferences();
+        model.setWorkingDirectoryDefined(prefs.getWorkDirSet());
+        model.setSynchronizationDirectoryDefined(prefs.getSyncDirSet());
+        model.setUseSyncDirectory(prefs.useSyncDirectory());
+
         if (model.isWorkingDirectoryDefined()){
-            RotcPreferences prefs = RotcPreferences.getRotcPreferences();
-            File dataSourceFile = new File(prefs.getWorkDir(), "contacts.mdb");
+            File dataSourceFile = new File(prefs.getWorkDir(), DATA_SOURCE_FILE_NAME);
             if (!dataSourceFile.exists()){
                 try {
                     File sourceFile = new File((getClass().getResource("/resources/contacts.mdb")).toURI());
@@ -127,7 +127,12 @@ public class RotcContactsController {
     }
 
     public void submitData(Object[] data, boolean dataUpdate) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        if (!dataUpdate){
+            model.getQueries().addContact(data);
+        }
+        else {
+            model.getQueries().updateContact(data);
+        }
     }
 
     private void showBadConfigurationDialog(String dataSourceName, String dataSourceFileName) {

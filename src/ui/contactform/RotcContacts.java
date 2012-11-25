@@ -6,6 +6,7 @@ package ui.contactform;
 
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -357,7 +358,7 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
     }//GEN-LAST:event_majorLookupButtonActionPerformed
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
-        Object[] data = new Object[8];
+        Object[] data = new Object[9];
         data[0] = lastNameTextField.getText();
         data[1] = firstNameTextField.getText();
         data[2] = phoneOneTextField.getText();
@@ -366,6 +367,9 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
         data[5] = actTextField.getText();
         data[6] = majorComboBox.getSelectedIndex();
         data[7] = notesTextArea.getText();
+        //Build the contact date
+        Date now = new Date(System.currentTimeMillis());
+        data[8] = now.toString();
         contactController.submitData(data,dataUpdate);
     }//GEN-LAST:event_submitButtonActionPerformed
 
@@ -399,8 +403,8 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
                 RotcContactsModel model = new RotcContactsModel();
                 model.addObserver(instance);
                 contactController = new RotcContactsController(model);
-                contactController.performInitialization();
                 contactController.initDatabase();
+                contactController.performInitialization();
 
                 ComponentPosition.centerFrame(instance);
                 instance.setVisible(true);

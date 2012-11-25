@@ -65,4 +65,19 @@ public class ContactQueries {
         }
     }
 
+    public void addContact(Object[] data) {
+        try {
+            Statement statement = dataConnection.createStatement();
+            statement.execute("INSERT INTO contacts (ContactDate, LastName, FirstName, Phone1, Phone2, GPA, ACTSAT, major, Notes)" +
+                                " VALUES ({d'" + data[8] + "'},'" + data[0] + "','" + data[1] + "','" + data[2] + "','" + data[3] + "','" +
+                                data[4] + "','" + data[5] + "'," + data[6] + ",'" + data[7] + "');");
+        } catch (SQLException ex) {
+            System.out.println("SQL FUBAR");
+        }
+    }
+
+    public void updateContact(Object[] data) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
 }
