@@ -13,8 +13,7 @@ public class SearchKeyListener implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
-        System.out.println("Key Typed" + e.getKeyChar());
-        System.out.println(((JTextField) e.getComponent()).getText());
+        //Do nothing
     }
 
     @Override
@@ -24,7 +23,8 @@ public class SearchKeyListener implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-        //Do nothing
+        System.out.println("Key Typed" + e.getKeyChar());
+        System.out.println(((JTextField) e.getComponent()).getText());
     }
 
 }

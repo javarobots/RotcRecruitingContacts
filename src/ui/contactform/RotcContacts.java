@@ -7,7 +7,7 @@ package ui.contactform;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.sql.Date;
-import java.util.ArrayList;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.DefaultComboBoxModel;
@@ -145,6 +145,11 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
 
         submitButton.setText("Submit");
         submitButton.setEnabled(false);
+        submitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submitButtonActionPerformed(evt);
+            }
+        });
 
         majorLookupButton.setText("...");
         majorLookupButton.setEnabled(false);
@@ -391,6 +396,29 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
         dialog.setVisible(true);
     }//GEN-LAST:event_majorLookupButtonActionPerformed
 
+    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
+        Object[] data = new Object[9];
+        data[0] = lastNameTextField.getText();
+        data[1] = firstNameTextField.getText();
+        data[2] = phoneOneTextField.getText();
+        data[3] = phoneTwoTextField.getText();
+        data[4] = gpaTextField.getText();
+        data[5] = actTextField.getText();
+        data[6] = majorComboBox.getSelectedItem().toString();
+        data[7] = notesTextArea.getText();
+        data[8] = (new Date(System.currentTimeMillis())).toString();
+        contactController.submitData(data, dataUpdate);
+        
+        //Clear Fields
+        lastNameTextField.setText("");
+        firstNameTextField.setText("");
+        phoneOneTextField.setText("");
+        phoneTwoTextField.setText("");
+        gpaTextField.setText("");
+        actTextField.setText("");
+        notesTextArea.setText("");
+    }//GEN-LAST:event_submitButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -511,9 +539,9 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
             //Update academic combo box
             DefaultComboBoxModel majorModel = (DefaultComboBoxModel) majorComboBox.getModel();
             majorModel.removeAllElements();
-            ArrayList<String> majors = model.getAcademicMajors();
-            if (majors != null){
-                for(String s : model.getAcademicMajors()){
+            Map<String, Integer> majorMap = model.getMajorMap();
+            if (majorMap != null){
+                for(String s : majorMap.keySet()){
                     majorModel.addElement(s);
                 }
             }

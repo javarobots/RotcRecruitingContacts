@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -48,11 +50,16 @@ public class RotcContactsController {
 
             //Init academic major list
             ResultSet majors = model.getQueries().getAcademicMajors();
+            Map<String,Integer> majorMap = new HashMap<>();
             ArrayList<String> majorList = new ArrayList<>();
             while(majors.next()){
-                majorList.add(majors.getString("major"));
+                String major = majors.getString("major");
+                int majorID = majors.getInt("ID");
+                majorList.add(major);
+                majorMap.put(major, majorID);
             }
             model.setAcademicMajors(majorList);
+            model.setMajorMap(majorMap);
         } catch (SQLException ex) {
             showBadConfigurationDialog(DATA_SOURCE_NAME, DATA_SOURCE_FILE_NAME);
         }
@@ -127,12 +134,16 @@ public class RotcContactsController {
     }
 
     public void submitData(Object[] data, boolean dataUpdate) {
+        Integer majorID = model.getMajorMap().get(data[6].toString());
+        data[6] = majorID.toString();
         if (!dataUpdate){
             model.getQueries().addContact(data);
         }
         else {
             model.getQueries().updateContact(data);
-        }
+        }        
+        model.setRecordCount(model.getQueries().getContactCount());
+        model.notifyObservers();
     }
 
     private void showBadConfigurationDialog(String dataSourceName, String dataSourceFileName) {

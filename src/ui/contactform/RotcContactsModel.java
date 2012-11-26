@@ -5,6 +5,8 @@ import database.MSAccessConnection;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Observable;
 import ui.queries.ContactQueries;
 
@@ -22,6 +24,7 @@ public class RotcContactsModel extends Observable {
     private ContactQueries queries;
     private int recordCount = 0;
     private ArrayList<String> academicMajors;
+    private Map<String, Integer> majorMap;
     private boolean updateData = false;
 
     public boolean isWorkingDirectoryDefined() {
@@ -59,14 +62,7 @@ public class RotcContactsModel extends Observable {
     }
 
     public Connection getDatabaseConnection(){
-        Connection connection = null;
-        try {
-            connection = dataSourceConnection.getConnection();
-        } catch (SQLException ex) {
-            //Do nothing
-            //TODO: fix this
-        }
-        return connection;
+        return dataSourceConnection.getConnection();
     }
 
     public int getRecordCount() {
@@ -75,6 +71,7 @@ public class RotcContactsModel extends Observable {
 
     public void setRecordCount(int count) {
         recordCount = count;
+        setChanged();
     }
 
     public ContactQueries getQueries() {
@@ -108,4 +105,13 @@ public class RotcContactsModel extends Observable {
         setChanged();
     }
 
+    public Map<String, Integer> getMajorMap() {
+        return majorMap;
+    }
+
+    public void setMajorMap(Map<String, Integer> majorMap) {
+        this.majorMap = majorMap;
+        setChanged();
+    }
+    
 }
