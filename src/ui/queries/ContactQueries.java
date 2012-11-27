@@ -80,6 +80,12 @@ public class ContactQueries {
         throw new UnsupportedOperationException("Not yet implemented");
     }
     
+    /**
+     * Determines whether a major being deleted exists
+     * in the contacts table
+     * @param majorID
+     * @return 
+     */
     public boolean majorBeingUsed(String majorID) {
         boolean majorUsed = false;
         try {
@@ -93,6 +99,20 @@ public class ContactQueries {
             Logger.getLogger(ContactQueries.class.getName()).log(Level.SEVERE, null, ex);
         }
         return majorUsed;
+    }
+    
+    public ResultSet contactSearch(String searchValue) {
+        ResultSet result = null;
+            if (!searchValue.isEmpty()){
+                try {
+                    String searchPattern = "'" + searchValue + "%'";
+                    Statement statement = dataConnection.createStatement();
+                    result = statement.executeQuery("SELECT * FROM contacts WHERE LastName LIKE " + searchPattern);
+                } catch (SQLException ex) {
+                    Logger.getLogger(ContactQueries.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        return result;
     }
 
 }

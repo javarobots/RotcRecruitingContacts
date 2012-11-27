@@ -26,6 +26,7 @@ import ui.utility.SearchKeyListener;
 public class RotcContacts extends javax.swing.JFrame implements Observer {
 
     private static RotcContactsController contactController;
+    private boolean firstUpdate = true;
     private boolean lastNameFocus = false;
     private boolean dataUpdate = false;
 
@@ -34,10 +35,6 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
      */
     public RotcContacts() {
         initComponents();
-        AbstractTableModel searchTableModel = new SearchTableModel();
-        searchLastNameTextField.addKeyListener(new SearchKeyListener(searchTableModel));
-        searchResultsTable.setModel(searchTableModel);
-
         this.addWindowListener(new WindowListener() {
 
             @Override
@@ -453,6 +450,12 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
         notesTextArea.setText("");
     }//GEN-LAST:event_submitButtonActionPerformed
 
+    private void initSearchPanel(){        
+        AbstractTableModel searchTableModel = new SearchTableModel();
+        searchLastNameTextField.addKeyListener(new SearchKeyListener(searchTableModel, contactController));
+        searchResultsTable.setModel(searchTableModel);
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -540,6 +543,10 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
+        if (firstUpdate){
+            initSearchPanel();
+            firstUpdate = false;
+        }
         if (o instanceof RotcContactsModel){
             RotcContactsModel model = (RotcContactsModel)o;
 

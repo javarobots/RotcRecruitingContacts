@@ -4,7 +4,6 @@ package ui.contactform;
 import database.MSAccessConnection;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.Observable;
 import ui.queries.ContactQueries;

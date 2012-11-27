@@ -59,8 +59,15 @@ public class SearchTableModel extends AbstractTableModel {
                 data.get(1).add(results.getString("LastName"));
                 data.get(2).add(results.getString("FirstName"));
             }
+            fireTableDataChanged();
         } catch (SQLException ex) {
             Logger.getLogger(SearchTableModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void clearDate() {
+        for (int i = 0 ; i < 3 ; i++){
+            data.get(i).clear();
         }
     }
     
