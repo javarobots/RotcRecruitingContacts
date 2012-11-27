@@ -7,6 +7,8 @@ package ui.dialog;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTable;
@@ -162,9 +164,11 @@ public class AcademicMajorDialog extends javax.swing.JDialog {
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         if (academicMajorTable.getSelectedRow() > -1){
             String id = (String) academicMajorTable.getModel().getValueAt(academicMajorTable.getSelectedRow(), 0);
-            databaseQueries.deleteAcademicMajor(id);
-            updateContactsModel();
-            this.dispose();
+            if (!databaseQueries.majorBeingUsed(id)){
+                databaseQueries.deleteAcademicMajor(id);
+                updateContactsModel();
+                this.dispose();
+            }
         }
     }//GEN-LAST:event_deleteButtonActionPerformed
 
@@ -190,10 +194,14 @@ public class AcademicMajorDialog extends javax.swing.JDialog {
         try {
             ResultSet majors = databaseQueries.getAcademicMajors();
             ArrayList<String> majorList = new ArrayList<>();
-            while (majors.next()){
-                majorList.add(majors.getString("major"));
+            Map<String,Integer> majorMap = new HashMap<>();
+            while(majors.next()){
+                String major = majors.getString("major");
+                int majorID = majors.getInt("ID");
+                majorList.add(major);
+                majorMap.put(major, majorID);
             }
-            contactsModel.setAcademicMajors(majorList);
+            contactsModel.setMajorMap(majorMap);
             contactsModel.notifyObservers();
         } catch (SQLException ex) {
             Logger.getLogger(AcademicMajorDialog.class.getName()).log(Level.SEVERE, null, ex);

@@ -4,12 +4,19 @@ package ui.utility;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JTextField;
+import javax.swing.table.AbstractTableModel;
 
 /**
  *
  * @author javarobots
  */
 public class SearchKeyListener implements KeyListener {
+    
+    private AbstractTableModel searchTableModel;
+    
+    public SearchKeyListener(AbstractTableModel model) {
+        this.searchTableModel = model;
+    }
 
     @Override
     public void keyTyped(KeyEvent e) {

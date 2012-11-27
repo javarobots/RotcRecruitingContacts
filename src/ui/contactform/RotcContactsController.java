@@ -51,14 +51,11 @@ public class RotcContactsController {
             //Init academic major list
             ResultSet majors = model.getQueries().getAcademicMajors();
             Map<String,Integer> majorMap = new HashMap<>();
-            ArrayList<String> majorList = new ArrayList<>();
             while(majors.next()){
                 String major = majors.getString("major");
                 int majorID = majors.getInt("ID");
-                majorList.add(major);
                 majorMap.put(major, majorID);
             }
-            model.setAcademicMajors(majorList);
             model.setMajorMap(majorMap);
         } catch (SQLException ex) {
             showBadConfigurationDialog(DATA_SOURCE_NAME, DATA_SOURCE_FILE_NAME);

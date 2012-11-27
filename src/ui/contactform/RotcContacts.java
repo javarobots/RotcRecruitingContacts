@@ -7,11 +7,14 @@ package ui.contactform;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
+import javax.swing.table.AbstractTableModel;
 import ui.dialog.AcademicMajorDialog;
 import ui.utility.ComponentPosition;
 import ui.utility.SearchKeyListener;
@@ -31,7 +34,9 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
      */
     public RotcContacts() {
         initComponents();
-        searchLastNameTextField.addKeyListener(new SearchKeyListener());
+        AbstractTableModel searchTableModel = new SearchTableModel();
+        searchLastNameTextField.addKeyListener(new SearchKeyListener(searchTableModel));
+        searchResultsTable.setModel(searchTableModel);
 
         this.addWindowListener(new WindowListener() {
 
@@ -107,6 +112,9 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
         searchPanel = new javax.swing.JPanel();
         searchLastNameLabel = new javax.swing.JLabel();
         searchLastNameTextField = new javax.swing.JTextField();
+        searchPanelScrollPane = new javax.swing.JScrollPane();
+        searchResultsTable = new javax.swing.JTable();
+        displayButton = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
@@ -248,12 +256,27 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
                 .addGroup(contactPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(submitButton)
                     .addComponent(totalRecordsLabel))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         tabbedPane.addTab("Contact", contactPanel);
 
         searchLastNameLabel.setText("Last Name:");
+
+        searchResultsTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        searchPanelScrollPane.setViewportView(searchResultsTable);
+
+        displayButton.setText("Display");
 
         javax.swing.GroupLayout searchPanelLayout = new javax.swing.GroupLayout(searchPanel);
         searchPanel.setLayout(searchPanelLayout);
@@ -261,10 +284,17 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
             searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(searchPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(searchLastNameLabel)
-                .addGap(18, 18, 18)
-                .addComponent(searchLastNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(160, Short.MAX_VALUE))
+                .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(searchPanelLayout.createSequentialGroup()
+                        .addComponent(searchLastNameLabel)
+                        .addGap(18, 18, 18)
+                        .addComponent(searchLastNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(searchPanelScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(displayButton)
+                .addContainerGap())
         );
         searchPanelLayout.setVerticalGroup(
             searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -273,7 +303,11 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
                 .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(searchLastNameLabel)
                     .addComponent(searchLastNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(361, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(searchPanelScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(displayButton)
+                .addContainerGap())
         );
 
         tabbedPane.addTab("Search", searchPanel);
@@ -304,7 +338,7 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 327, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 335, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addContainerGap())
         );
@@ -367,7 +401,7 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tabbedPane)
+            .addComponent(tabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE)
         );
 
         pack();
@@ -461,6 +495,7 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
     private javax.swing.JLabel actLabel;
     private javax.swing.JTextField actTextField;
     private javax.swing.JPanel contactPanel;
+    private javax.swing.JButton displayButton;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JLabel firstNameLabel;
@@ -487,6 +522,8 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
     private javax.swing.JLabel searchLastNameLabel;
     private javax.swing.JTextField searchLastNameTextField;
     private javax.swing.JPanel searchPanel;
+    private javax.swing.JScrollPane searchPanelScrollPane;
+    private javax.swing.JTable searchResultsTable;
     private javax.swing.JMenu statusMenu;
     private javax.swing.JButton submitButton;
     private javax.swing.JCheckBoxMenuItem synchronizeCheckBox;
@@ -541,7 +578,12 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
             majorModel.removeAllElements();
             Map<String, Integer> majorMap = model.getMajorMap();
             if (majorMap != null){
-                for(String s : majorMap.keySet()){
+                ArrayList<String> majors = new ArrayList<>();
+                for (String s : majorMap.keySet()){
+                    majors.add(s);
+                }
+                Collections.sort(majors);
+                for(String s : majors){
                     majorModel.addElement(s);
                 }
             }

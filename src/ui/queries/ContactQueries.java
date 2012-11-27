@@ -79,5 +79,20 @@ public class ContactQueries {
     public void updateContact(Object[] data) {
         throw new UnsupportedOperationException("Not yet implemented");
     }
+    
+    public boolean majorBeingUsed(String majorID) {
+        boolean majorUsed = false;
+        try {
+            Statement statement = dataConnection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
+            ResultSet result = statement.executeQuery("SELECT ID from contacts WHERE major=" + majorID + ";");
+            result.last();            
+            if (result.getRow() != 0){
+                majorUsed = true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ContactQueries.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return majorUsed;
+    }
 
 }
