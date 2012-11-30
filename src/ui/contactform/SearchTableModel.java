@@ -65,10 +65,11 @@ public class SearchTableModel extends AbstractTableModel {
         }
     }
     
-    public void clearDate() {
+    public void clearData() {
         for (int i = 0 ; i < 3 ; i++){
             data.get(i).clear();
         }
+        fireTableDataChanged();
     }
     
 }

@@ -64,6 +64,15 @@ public class ContactQueries {
             Logger.getLogger(ContactQueries.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public void deleteContact(String id){
+        try {
+            Statement statement = dataConnection.createStatement();
+            statement.execute("DELETE FROM contacts WHERE id = " + id + ";");
+        } catch (SQLException ex) {
+            Logger.getLogger(ContactQueries.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public void addContact(Object[] data) {
         try {            
@@ -112,6 +121,17 @@ public class ContactQueries {
                     Logger.getLogger(ContactQueries.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+        return result;
+    }
+
+    public ResultSet getContactRecord(String selectedIndex) {
+        ResultSet result = null;
+        try {
+            Statement statement = dataConnection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
+            result = statement.executeQuery("SELECT * from contacts WHERE ID=" + selectedIndex + ";");
+        } catch (SQLException ex) {
+            Logger.getLogger(ContactQueries.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return result;
     }
 
