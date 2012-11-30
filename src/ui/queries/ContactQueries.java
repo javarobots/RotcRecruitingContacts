@@ -86,7 +86,19 @@ public class ContactQueries {
     }
 
     public void updateContact(Object[] data) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        try {            
+            Statement statement = dataConnection.createStatement();
+            statement.execute("UPDATE contacts SET LastName = '" + data[0] + "'," +
+                              "Phone1 = '" + data[2] + "'," +
+                              "Phone2 = '" + data[3] + "'," +
+                              "GPA = '" + data[4] + "'," +
+                              "ACTSAT = '" + data[5] + "'," + 
+                              "major = '" + data[6] + "'," +
+                              "Notes = '" + data[7] + "' " +
+                              "WHERE ID = 99");
+        } catch (SQLException ex) {
+            System.out.println("SQL FUBAR");
+        }
     }
     
     /**
