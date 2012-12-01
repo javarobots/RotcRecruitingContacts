@@ -137,7 +137,7 @@ public class RotcContactsController {
         }
         else {
             model.getQueries().updateContact(data);
-        }        
+        }
         model.setRecordCount(model.getQueries().getContactCount());
         model.notifyObservers();
     }
@@ -147,6 +147,10 @@ public class RotcContactsController {
         dialog.setNames(dataSourceName, dataSourceFileName);
         ComponentPosition.centerFrame(dialog);
         dialog.setVisible(true);
+    }
+
+    public String getDataSourceFileName() {
+        return DATA_SOURCE_FILE_NAME;
     }
 
 }

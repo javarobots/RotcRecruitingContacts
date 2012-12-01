@@ -4,8 +4,11 @@
  */
 package ui.contactform;
 
+import configuration.RotcPreferences;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.File;
+import java.io.IOException;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,6 +23,7 @@ import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.table.AbstractTableModel;
+import org.apache.commons.io.FileUtils;
 import ui.dialog.AcademicMajorDialog;
 import ui.utility.ComponentPosition;
 import ui.utility.SearchKeyListener;
@@ -70,6 +74,18 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
             @Override
             public void windowClosing(WindowEvent e) {
                 contactController.closeDatabaseConnection();
+                if (RotcPreferences.getRotcPreferences().getSyncDirSet() && RotcPreferences.getRotcPreferences().useSyncDirectory()){
+                    try {
+                        File sourceFile = new File(RotcPreferences.getRotcPreferences().getWorkDir(), contactController.getDataSourceFileName());
+                        File destFile = new File(RotcPreferences.getRotcPreferences().getSyncDir(), contactController.getDataSourceFileName());
+                        if (destFile.exists()){
+                            FileUtils.deleteQuietly(destFile);
+                        }
+                        FileUtils.copyFile(sourceFile, destFile);
+                    } catch (IOException ex) {
+                        Logger.getLogger(RotcContacts.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
                 System.exit(0);
             }
         });
