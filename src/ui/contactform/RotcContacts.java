@@ -19,7 +19,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
-import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import ui.dialog.AcademicMajorDialog;
 import ui.utility.ComponentPosition;
@@ -35,6 +34,7 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
     private boolean firstUpdate = true;
     private boolean lastNameFocus = false;
     private boolean dataUpdate = false;
+    private int dataUpdateId;
     private Map<Integer,Integer> majorIDtoComboIndexMap;
 
     /**
@@ -107,6 +107,7 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
         majorLookupButton = new javax.swing.JButton();
         totalRecordsLabel = new javax.swing.JLabel();
         majorComboBox = new javax.swing.JComboBox();
+        newButton = new javax.swing.JButton();
         searchPanel = new javax.swing.JPanel();
         searchLastNameLabel = new javax.swing.JLabel();
         searchLastNameTextField = new javax.swing.JTextField();
@@ -167,6 +168,13 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
 
         totalRecordsLabel.setText("Total Records: 0");
 
+        newButton.setText("New");
+        newButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout contactPanelLayout = new javax.swing.GroupLayout(contactPanel);
         contactPanel.setLayout(contactPanelLayout);
         contactPanelLayout.setHorizontalGroup(
@@ -211,9 +219,14 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, contactPanelLayout.createSequentialGroup()
                         .addComponent(totalRecordsLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(newButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(submitButton)))
                 .addContainerGap())
         );
+
+        contactPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {newButton, submitButton});
+
         contactPanelLayout.setVerticalGroup(
             contactPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(contactPanelLayout.createSequentialGroup()
@@ -253,7 +266,8 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(contactPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(submitButton)
-                    .addComponent(totalRecordsLabel))
+                    .addComponent(totalRecordsLabel)
+                    .addComponent(newButton))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
@@ -439,7 +453,7 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
     }//GEN-LAST:event_majorLookupButtonActionPerformed
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
-        Object[] data = new Object[9];
+        Object[] data = new Object[10];
         data[0] = lastNameTextField.getText();
         data[1] = firstNameTextField.getText();
         data[2] = phoneOneTextField.getText();
@@ -449,16 +463,23 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
         data[6] = majorComboBox.getSelectedItem().toString();
         data[7] = notesTextArea.getText();
         data[8] = (new Date(System.currentTimeMillis())).toString();
+        data[9] = dataUpdateId;
+
+        //Clear Fields when not updating data
+        if (!dataUpdate){
+            System.out.println("Clear for update");
+            lastNameTextField.setText("");
+            firstNameTextField.setText("");
+            phoneOneTextField.setText("");
+            phoneTwoTextField.setText("");
+            gpaTextField.setText("");
+            actTextField.setText("");
+            notesTextArea.setText("");
+        }
+
         contactController.submitData(data, dataUpdate);
-        
-        //Clear Fields
-        lastNameTextField.setText("");
-        firstNameTextField.setText("");
-        phoneOneTextField.setText("");
-        phoneTwoTextField.setText("");
-        gpaTextField.setText("");
-        actTextField.setText("");
-        notesTextArea.setText("");
+
+
     }//GEN-LAST:event_submitButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
@@ -482,7 +503,7 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
             try {
                 String selectedIndex = (String) searchResultsTable.getModel().getValueAt(selectedRow, 0);
                 ResultSet result = contactController.getModel().getQueries().getContactRecord(selectedIndex);
-                
+
                 //Populate text fields
                 result.next();
                 lastNameTextField.setText(result.getString("LastName"));
@@ -490,36 +511,52 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
                 phoneOneTextField.setText(result.getString("Phone1"));
                 phoneTwoTextField.setText(result.getString("Phone2"));
                 gpaTextField.setText(result.getString("GPA"));
-                actTextField.setText(result.getString("ACTSAT"));                
+                actTextField.setText(result.getString("ACTSAT"));
                 notesTextArea.setText(result.getString("Notes"));
-                
+
                 //Set combo box selection
                 int majorID = result.getInt("major");
                 majorComboBox.setSelectedIndex(majorIDtoComboIndexMap.get(majorID));
                 dataUpdate = true;
+                contactController.getModel().setUpdateData(true);
+                dataUpdateId = result.getInt("ID");
             } catch (SQLException ex) {
                 Logger.getLogger(RotcContacts.class.getName()).log(Level.SEVERE, null, ex);
-            }            
+            }
         } else {
             lastNameTextField.setText("");
             firstNameTextField.setText("");
             phoneOneTextField.setText("");
             phoneTwoTextField.setText("");
             gpaTextField.setText("");
-            actTextField.setText("");                
+            actTextField.setText("");
             notesTextArea.setText("");
             majorComboBox.setSelectedIndex(0);
             dataUpdate = false;
+            contactController.getModel().setUpdateData(false);
         }
         tabbedPane.setSelectedIndex(0);
     }//GEN-LAST:event_displayButtonActionPerformed
 
-    private void initSearchPanel(){        
+    private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
+        lastNameTextField.setText("");
+        firstNameTextField.setText("");
+        phoneOneTextField.setText("");
+        phoneTwoTextField.setText("");
+        gpaTextField.setText("");
+        actTextField.setText("");
+        notesTextArea.setText("");
+        majorComboBox.setSelectedIndex(0);
+        dataUpdate = false;
+        contactController.getModel().setUpdateData(false);
+    }//GEN-LAST:event_newButtonActionPerformed
+
+    private void initSearchPanel(){
         AbstractTableModel searchTableModel = new SearchTableModel();
         searchLastNameTextField.addKeyListener(new SearchKeyListener(searchTableModel, contactController));
         searchResultsTable.setModel(searchTableModel);
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -579,6 +616,7 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
     private javax.swing.JLabel majorLabel;
     private javax.swing.JButton majorLookupButton;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JButton newButton;
     private javax.swing.JLabel notesLabel;
     private javax.swing.JScrollPane notesScrollPane;
     private javax.swing.JTextArea notesTextArea;
@@ -645,32 +683,29 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
             totalRecordsLabel.setText("Total Records: " + model.getRecordCount());
 
             //Update academic combo box
-            DefaultComboBoxModel majorModel = (DefaultComboBoxModel) majorComboBox.getModel();
-            majorModel.removeAllElements();
-            Map<String, Integer> majorMap = model.getMajorMap();
-            int comboBoxIndex = 0;
-            majorIDtoComboIndexMap.clear();
-            if (majorMap != null){
-                ArrayList<String> majors = new ArrayList<>();
-                for (String s : majorMap.keySet()){
-                    majors.add(s);
+            if (!model.isUpdateData()){
+                DefaultComboBoxModel majorModel = (DefaultComboBoxModel) majorComboBox.getModel();
+                majorModel.removeAllElements();
+                Map<String, Integer> majorMap = model.getMajorMap();
+                int comboBoxIndex = 0;
+                majorIDtoComboIndexMap.clear();
+                if (majorMap != null){
+                    ArrayList<String> majors = new ArrayList<>();
+                    for (String s : majorMap.keySet()){
+                        majors.add(s);
+                    }
+                    Collections.sort(majors);
+                    for(String s : majors){
+                        majorModel.addElement(s);
+                        majorIDtoComboIndexMap.put(majorMap.get(s), comboBoxIndex++);
+                    }
                 }
-                Collections.sort(majors);
-                for(String s : majors){
-                    majorModel.addElement(s);
-                    majorIDtoComboIndexMap.put(majorMap.get(s), comboBoxIndex++);
-                }
-                System.out.println("Degbug");
             }
 
             //Check if submit and mjor button should be enabled
             if (model.isEnableButtons()){
                 enableMajorSubmitButtons(true);
             }
-
-            //See if data is being updated
-            dataUpdate = model.isUpdateData();
-
         }
     }
 }

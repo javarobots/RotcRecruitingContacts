@@ -64,7 +64,7 @@ public class ContactQueries {
             Logger.getLogger(ContactQueries.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void deleteContact(String id){
         try {
             Statement statement = dataConnection.createStatement();
@@ -75,7 +75,7 @@ public class ContactQueries {
     }
 
     public void addContact(Object[] data) {
-        try {            
+        try {
             Statement statement = dataConnection.createStatement();
             statement.execute("INSERT INTO contacts (ContactDate, LastName, FirstName, Phone1, Phone2, GPA, ACTSAT, major, Notes)" +
                                 " VALUES ({d'" + data[8] + "'},'" + data[0] + "','" + data[1] + "','" + data[2] + "','" + data[3] + "','" +
@@ -86,33 +86,34 @@ public class ContactQueries {
     }
 
     public void updateContact(Object[] data) {
-        try {            
+        try {
+            Integer updateId = (Integer) data[9];
             Statement statement = dataConnection.createStatement();
             statement.execute("UPDATE contacts SET LastName = '" + data[0] + "'," +
                               "Phone1 = '" + data[2] + "'," +
                               "Phone2 = '" + data[3] + "'," +
                               "GPA = '" + data[4] + "'," +
-                              "ACTSAT = '" + data[5] + "'," + 
+                              "ACTSAT = '" + data[5] + "'," +
                               "major = '" + data[6] + "'," +
                               "Notes = '" + data[7] + "' " +
-                              "WHERE ID = 99");
+                              "WHERE ID = " + updateId.toString() + ";");
         } catch (SQLException ex) {
             System.out.println("SQL FUBAR");
         }
     }
-    
+
     /**
      * Determines whether a major being deleted exists
      * in the contacts table
      * @param majorID
-     * @return 
+     * @return
      */
     public boolean majorBeingUsed(String majorID) {
         boolean majorUsed = false;
         try {
             Statement statement = dataConnection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
             ResultSet result = statement.executeQuery("SELECT ID from contacts WHERE major=" + majorID + ";");
-            result.last();            
+            result.last();
             if (result.getRow() != 0){
                 majorUsed = true;
             }
@@ -121,7 +122,7 @@ public class ContactQueries {
         }
         return majorUsed;
     }
-    
+
     public ResultSet contactSearch(String searchValue) {
         ResultSet result = null;
             if (!searchValue.isEmpty()){

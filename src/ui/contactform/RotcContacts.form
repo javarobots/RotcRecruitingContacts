@@ -164,7 +164,9 @@
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="totalRecordsLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="submitButton" min="-2" max="-2" attributes="0"/>
+                              <Component id="newButton" linkSize="2" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="submitButton" linkSize="2" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -218,6 +220,7 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="submitButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="totalRecordsLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="newButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="19" max="32767" attributes="0"/>
                   </Group>
@@ -321,6 +324,14 @@
                   <StringArray count="0"/>
                 </Property>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="newButton">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="New"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newButtonActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
