@@ -26,6 +26,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 import org.apache.commons.io.FileUtils;
 import ui.dialog.AcademicMajorDialog;
+import ui.queries.ContactQueries;
 import ui.utility.ComponentPosition;
 import ui.utility.SearchKeyListener;
 
@@ -503,7 +504,10 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         if (!contactIDTextField.getText().isEmpty()){
-            contactController.getModel().getQueries().deleteContact(contactIDTextField.getText());
+            ContactQueries queries = contactController.getModel().getQueries();
+            queries.deleteContact(contactIDTextField.getText());
+            contactController.getModel().setRecordCount(queries.getContactCount());
+            contactController.getModel().notifyObservers();
         }
         contactIDTextField.setText("");
         ResultSet result = contactController.getModel().getQueries().contactSearch(searchLastNameTextField.getText());
