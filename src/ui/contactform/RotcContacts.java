@@ -22,6 +22,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 import org.apache.commons.io.FileUtils;
 import ui.dialog.AcademicMajorDialog;
@@ -78,10 +79,12 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
                     try {
                         File sourceFile = new File(RotcPreferences.getRotcPreferences().getWorkDir(), contactController.getDataSourceFileName());
                         File destFile = new File(RotcPreferences.getRotcPreferences().getSyncDir(), contactController.getDataSourceFileName());
-                        if (destFile.exists()){
-                            FileUtils.deleteQuietly(destFile);
+                        if (JOptionPane.showConfirmDialog(null, "Do you wish to copy the working file to the synchronization directory?", "Synchronize File", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                            if (destFile.exists()){
+                                FileUtils.deleteQuietly(destFile);
+                            }
+                            FileUtils.copyFile(sourceFile, destFile);
                         }
-                        FileUtils.copyFile(sourceFile, destFile);
                     } catch (IOException ex) {
                         Logger.getLogger(RotcContacts.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -602,12 +605,28 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
 
                 RotcContactsModel model = new RotcContactsModel();
                 model.addObserver(instance);
-                contactController = new RotcContactsController(model);
-                contactController.initDatabase();
-                contactController.performInitialization();
-
                 ComponentPosition.centerFrame(instance);
                 instance.setVisible(true);
+                contactController = new RotcContactsController(model);
+
+                //Copy sync file
+                if (RotcPreferences.getRotcPreferences().getSyncDirSet() && RotcPreferences.getRotcPreferences().useSyncDirectory()){
+                    try {
+                        File destFile = new File(RotcPreferences.getRotcPreferences().getWorkDir(), contactController.getDataSourceFileName());
+                        File sourceFile = new File(RotcPreferences.getRotcPreferences().getSyncDir(), contactController.getDataSourceFileName());
+                        if (JOptionPane.showConfirmDialog(null, "Do you wish to copy the sychronized file to the working directory?", "Synchronize File", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                            if (destFile.exists() && sourceFile.exists()){
+                                FileUtils.deleteQuietly(destFile);
+                            }
+                            FileUtils.copyFile(sourceFile, destFile);
+                        }
+                    } catch (IOException ex) {
+                        Logger.getLogger(RotcContacts.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+
+                contactController.initDatabase();
+                contactController.performInitialization();
             }
         });
     }
