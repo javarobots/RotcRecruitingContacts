@@ -6,8 +6,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.Observable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import ui.queries.ContactQueries;
 
 /**
@@ -61,13 +59,7 @@ public class RotcContactsModel extends Observable {
     }
 
     public Connection getDatabaseConnection(){
-        Connection connection = null;
-        try {
-            connection =  dataSourceConnection.getConnection();
-        } catch (SQLException ex) {
-            Logger.getLogger(RotcContactsModel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return connection;
+        return dataSourceConnection.getConnection();
     }
 
     public int getRecordCount() {
