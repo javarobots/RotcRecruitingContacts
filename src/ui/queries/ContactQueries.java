@@ -77,9 +77,9 @@ public class ContactQueries {
     public void addContact(Object[] data) {
         try {
             Statement statement = dataConnection.createStatement();
-            statement.execute("INSERT INTO contacts (ContactDate, LastName, FirstName, Phone1, Phone2, GPA, ACTSAT, major, Notes)" +
+            statement.execute("INSERT INTO contacts (ContactDate, LastName, FirstName, Phone1, Phone2, GPA, ACTSAT, major, Notes, EmailAddress)" +
                                 " VALUES ({d'" + data[8] + "'},'" + data[0] + "','" + data[1] + "','" + data[2] + "','" + data[3] + "','" +
-                                data[4] + "','" + data[5] + "'," + data[6] + ",'" + data[7] + "');");
+                                data[4] + "','" + data[5] + "'," + data[6] + ",'" + data[7] + "','" + data[10] + "');");
         } catch (SQLException ex) {
             System.out.println("SQL FUBAR");
         }
@@ -95,7 +95,8 @@ public class ContactQueries {
                               "GPA = '" + data[4] + "'," +
                               "ACTSAT = '" + data[5] + "'," +
                               "major = '" + data[6] + "'," +
-                              "Notes = '" + data[7] + "' " +
+                              "Notes = '" + data[7] + "'," +
+                              "EmailAddress = '" + data[10] + "' " +
                               "WHERE ID = " + updateId.toString() + ";");
         } catch (SQLException ex) {
             System.out.println("SQL FUBAR");

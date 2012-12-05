@@ -92,7 +92,7 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="tabbedPane" alignment="0" max="32767" attributes="0"/>
+          <Component id="tabbedPane" alignment="0" pref="459" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -116,50 +116,18 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="lastNameLabel" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="lastNameTextField" min="-2" pref="178" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="phoneOneLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="firstNameLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="phoneTwoLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="gpaLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="actLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="majorLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" attributes="0">
-                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                  <Component id="firstNameTextField" max="32767" attributes="0"/>
-                                                  <Component id="phoneOneTextField" max="32767" attributes="0"/>
-                                                  <Component id="phoneTwoTextField" max="32767" attributes="0"/>
-                                                  <Component id="actTextField" alignment="0" pref="177" max="32767" attributes="0"/>
-                                                  <Component id="gpaTextField" alignment="0" max="32767" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" attributes="0">
-                                              <Component id="majorComboBox" max="32767" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                  </Group>
+                                  <Component id="phoneOneLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="phoneTwoLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="gpaLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="actLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="majorLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="majorComboBox" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="majorLookupButton" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="notesLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="notesScrollPane" alignment="0" min="-2" pref="400" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="totalRecordsLabel" min="-2" max="-2" attributes="0"/>
@@ -168,6 +136,35 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="submitButton" linkSize="2" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="lastNameLabel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="lastNameTextField" min="-2" pref="178" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="notesLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="notesScrollPane" alignment="0" min="-2" pref="400" max="-2" attributes="0"/>
+                                  <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                      <Component id="actTextField" min="-2" pref="177" max="-2" attributes="0"/>
+                                      <Group type="102" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="firstNameLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="emailLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="firstNameTextField" max="32767" attributes="0"/>
+                                              <Component id="emailTextField" max="32767" attributes="0"/>
+                                              <Component id="phoneOneTextField" alignment="1" min="-2" pref="177" max="-2" attributes="0"/>
+                                              <Component id="phoneTwoTextField" alignment="1" min="-2" pref="177" max="-2" attributes="0"/>
+                                              <Component id="gpaTextField" alignment="1" min="-2" pref="177" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -175,7 +172,7 @@
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lastNameLabel" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -185,6 +182,11 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="firstNameLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="firstNameTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="emailLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="emailTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -215,14 +217,14 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="notesLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="notesScrollPane" min="-2" pref="119" max="-2" attributes="0"/>
+                      <Component id="notesScrollPane" min="-2" pref="137" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="submitButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="totalRecordsLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="newButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="19" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -255,6 +257,9 @@
             <Component class="javax.swing.JTextField" name="phoneOneTextField">
             </Component>
             <Component class="javax.swing.JTextField" name="phoneTwoTextField">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="phoneTwoTextFieldActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="gpaLabel">
               <Properties>
@@ -333,6 +338,13 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newButtonActionPerformed"/>
               </Events>
             </Component>
+            <Component class="javax.swing.JLabel" name="emailLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Email:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="emailTextField">
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="searchPanel">
@@ -375,7 +387,7 @@
                           <Component id="searchLastNameTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="searchPanelScrollPane" pref="323" max="32767" attributes="0"/>
+                      <Component id="searchPanelScrollPane" pref="354" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="displayButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -456,7 +468,7 @@
                           <Component id="contactIDLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="contactIDTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="335" max="32767" attributes="0"/>
+                      <EmptySpace pref="366" max="32767" attributes="0"/>
                       <Component id="deleteButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
