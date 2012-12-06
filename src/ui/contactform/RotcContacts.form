@@ -138,28 +138,37 @@
                           </Group>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="lastNameLabel" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="lastNameTextField" min="-2" pref="178" max="-2" attributes="0"/>
-                                  </Group>
                                   <Component id="notesLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="notesScrollPane" alignment="0" min="-2" pref="400" max="-2" attributes="0"/>
-                                  <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                                      <Component id="actTextField" min="-2" pref="177" max="-2" attributes="0"/>
-                                      <Group type="102" attributes="0">
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="firstNameLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Component id="emailLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="lastNameLabel" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                                              <Component id="lastNameTextField" min="-2" pref="178" max="-2" attributes="0"/>
                                           </Group>
-                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="firstNameTextField" max="32767" attributes="0"/>
-                                              <Component id="emailTextField" max="32767" attributes="0"/>
-                                              <Component id="phoneOneTextField" alignment="1" min="-2" pref="177" max="-2" attributes="0"/>
-                                              <Component id="phoneTwoTextField" alignment="1" min="-2" pref="177" max="-2" attributes="0"/>
-                                              <Component id="gpaTextField" alignment="1" min="-2" pref="177" max="-2" attributes="0"/>
+                                          <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                              <Component id="actTextField" min="-2" pref="177" max="-2" attributes="0"/>
+                                              <Group type="102" attributes="0">
+                                                  <Group type="103" groupAlignment="0" attributes="0">
+                                                      <Component id="firstNameLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="emailLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                  </Group>
+                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                      <Component id="firstNameTextField" max="32767" attributes="0"/>
+                                                      <Component id="emailTextField" max="32767" attributes="0"/>
+                                                      <Component id="phoneOneTextField" alignment="1" min="-2" pref="177" max="-2" attributes="0"/>
+                                                      <Component id="phoneTwoTextField" alignment="1" min="-2" pref="177" max="-2" attributes="0"/>
+                                                      <Component id="gpaTextField" alignment="1" min="-2" pref="177" max="-2" attributes="0"/>
+                                                  </Group>
+                                              </Group>
                                           </Group>
+                                      </Group>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="enrolledCheckBox" linkSize="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="wingsCheckBox" linkSize="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -177,11 +186,13 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lastNameLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lastNameTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="enrolledCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="firstNameLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="firstNameTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="wingsCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -344,6 +355,19 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="emailTextField">
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="enrolledCheckBox">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Enrolled"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="enrolledCheckBoxActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="wingsCheckBox">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="WINGS"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>
