@@ -162,12 +162,6 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
 
         phoneTwoLabel.setText("Phone 2:");
 
-        phoneTwoTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                phoneTwoTextFieldActionPerformed(evt);
-            }
-        });
-
         gpaLabel.setText("GPA:");
 
         actLabel.setText("ACT/SAT:");
@@ -507,7 +501,7 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
     }//GEN-LAST:event_majorLookupButtonActionPerformed
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
-        Object[] data = new Object[11];
+        Object[] data = new Object[13];
         data[0] = lastNameTextField.getText();
         data[1] = firstNameTextField.getText();
         data[2] = phoneOneTextField.getText();
@@ -519,6 +513,8 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
         data[8] = (new Date(System.currentTimeMillis())).toString();
         data[9] = dataUpdateId;
         data[10] = emailTextField.getText();
+        data[11] = enrolledCheckBox.isSelected();
+        data[12] = wingsCheckBox.isSelected();
 
         //Clear Fields when not updating data
         if (!dataUpdate){
@@ -531,6 +527,8 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
             actTextField.setText("");
             notesTextArea.setText("");
             emailTextField.setText("");
+            enrolledCheckBox.setSelected(false);
+            wingsCheckBox.setSelected(false);
         }
 
         contactController.submitData(data, dataUpdate);
@@ -563,7 +561,7 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
                 String selectedIndex = (String) searchResultsTable.getModel().getValueAt(selectedRow, 0);
                 ResultSet result = contactController.getModel().getQueries().getContactRecord(selectedIndex);
 
-                //Populate text fields
+                //Populate fields
                 result.next();
                 lastNameTextField.setText(result.getString("LastName"));
                 firstNameTextField.setText(result.getString("FirstName"));
@@ -573,6 +571,8 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
                 actTextField.setText(result.getString("ACTSAT"));
                 notesTextArea.setText(result.getString("Notes"));
                 emailTextField.setText(result.getString("EmailAddress"));
+                enrolledCheckBox.setSelected(result.getBoolean("Enrolled"));
+                wingsCheckBox.setSelected(result.getBoolean("Wings"));
 
                 //Set combo box selection
                 int majorID = result.getInt("major");
@@ -610,15 +610,15 @@ public class RotcContacts extends javax.swing.JFrame implements Observer {
         emailTextField.setText("");
         majorComboBox.setSelectedIndex(0);
         dataUpdate = false;
+        enrolledCheckBox.setSelected(false);
+        wingsCheckBox.setSelected(false);
         contactController.getModel().setUpdateData(false);
     }//GEN-LAST:event_newButtonActionPerformed
 
-    private void phoneTwoTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_phoneTwoTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_phoneTwoTextFieldActionPerformed
-
     private void enrolledCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enrolledCheckBoxActionPerformed
-        // TODO add your handling code here:
+        if (enrolledCheckBox.isSelected()){
+            wingsCheckBox.setSelected(true);
+        }
     }//GEN-LAST:event_enrolledCheckBoxActionPerformed
 
     private void initSearchPanel(){

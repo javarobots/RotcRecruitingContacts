@@ -76,10 +76,12 @@ public class ContactQueries {
 
     public void addContact(Object[] data) {
         try {
+            String enrolled = convertBooleanToString((Boolean)data[11]);
+            String wings = convertBooleanToString((Boolean)data[12]);
             Statement statement = dataConnection.createStatement();
-            statement.execute("INSERT INTO contacts (ContactDate, LastName, FirstName, Phone1, Phone2, GPA, ACTSAT, major, Notes, EmailAddress)" +
+            statement.execute("INSERT INTO contacts (ContactDate, LastName, FirstName, Phone1, Phone2, GPA, ACTSAT, major, Notes, EmailAddress, Enrolled, Wings)" +
                                 " VALUES ({d'" + data[8] + "'},'" + data[0] + "','" + data[1] + "','" + data[2] + "','" + data[3] + "','" +
-                                data[4] + "','" + data[5] + "'," + data[6] + ",'" + data[7] + "','" + data[10] + "');");
+                                data[4] + "','" + data[5] + "'," + data[6] + ",'" + data[7] + "','" + data[10] + "'," + enrolled + "," + wings + ");");
         } catch (SQLException ex) {
             System.out.println("SQL FUBAR");
         }
@@ -87,16 +89,21 @@ public class ContactQueries {
 
     public void updateContact(Object[] data) {
         try {
+            String enrolled = convertBooleanToString((Boolean)data[11]);
+            String wings = convertBooleanToString((Boolean)data[12]);
             Integer updateId = (Integer) data[9];
             Statement statement = dataConnection.createStatement();
             statement.execute("UPDATE contacts SET LastName = '" + data[0] + "'," +
+                              "FirstName = '" + data[1] + "'," +
                               "Phone1 = '" + data[2] + "'," +
                               "Phone2 = '" + data[3] + "'," +
                               "GPA = '" + data[4] + "'," +
                               "ACTSAT = '" + data[5] + "'," +
                               "major = '" + data[6] + "'," +
                               "Notes = '" + data[7] + "'," +
-                              "EmailAddress = '" + data[10] + "' " +
+                              "EmailAddress = '" + data[10] + "'," +
+                              "Enrolled = " + enrolled + "," +
+                              "Wings = " + wings + " " +
                               "WHERE ID = " + updateId.toString() + ";");
         } catch (SQLException ex) {
             System.out.println("SQL FUBAR");
@@ -147,6 +154,14 @@ public class ContactQueries {
             Logger.getLogger(ContactQueries.class.getName()).log(Level.SEVERE, null, ex);
         }
         return result;
+    }
+    
+    private String convertBooleanToString(boolean b) {
+         String result = "0";
+         if (b) {
+             result = "1";
+         }
+         return result;
     }
 
 }
